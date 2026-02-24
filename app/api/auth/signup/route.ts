@@ -1,11 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {cookies} from 'next/headers';
-import {api, ApiError} from '../../api';
-import {setCookiesFromResponse} from '../../cookieUtils';
-
-// Цей файл — це Route Handler
-// Він живе на сервері Next.js і виконується коли браузер робить POST /api/auth/signup
-// Браузер НЕ знає про сторонній API — він спілкується тільки з нашим Next.js
+import {api, ApiError} from '@/app/api/api';
 
 export async function POST( req: NextRequest ) {
 	// Читаємо дані які надіслав браузер (email, password, name)
@@ -15,30 +10,29 @@ export async function POST( req: NextRequest ) {
 		// Робимо запит до стороннього API вже з нашого сервера
 		// Сервер → сервер = немає CORS обмежень
 		const apiRes = await api.post('/users/signup', body);
-
-		// Отримуємо cookieStore — це інструмент Next.js для роботи з cookies
 		const cookieStore = await cookies();
 
-		// Сторонній API відповів і у відповіді є заголовок set-cookie
-		// Він виглядає приблизно так:
-		// "accessToken=eyJhb...; Path=/; Max-Age=900; HttpOnly"
-		const setCookie = apiRes.headers[ 'set-cookie' ];
+		const { token, refreshToken, ...user } = apiRes.data;
 
-		// Викликаємо нашу допоміжну функцію яка розпарсить set-cookie
-		// і запише токени у cookies браузера
-		const cookiesWereSet = await setCookiesFromResponse(setCookie, cookieStore);
 
-		if (cookiesWereSet) {
-			// Повертаємо дані користувача браузеру
-			return NextResponse.json(apiRes.data);
-		}
+		cookieStore.set('accessToken', token, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 60 * 15,
+			path: '/',
+		});
 
-		// Якщо API не повернув cookies — щось пішло не так
-		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+		cookieStore.set('refreshToken', refreshToken, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			maxAge: 60 * 60 * 24 * 7,
+			path: '/',
+		});
+
+		// Повертаємо тільки дані юзера без токенів
+		return NextResponse.json(user);
 
 	} catch (error) {
-		// Якщо сторонній API повернув помилку (наприклад email вже існує)
-		// передаємо цю помилку браузеру
 		const err = error as ApiError;
 		return NextResponse.json(
 			{ error: err.response?.data?.error ?? err.response?.data?.message ?? err.message },

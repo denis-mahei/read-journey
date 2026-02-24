@@ -1,92 +1,52 @@
-"use client";
+'use client';
 
-import {useForm} from "react-hook-form";
-import {useRouter} from "next/navigation";
-import Link from "next/link";
-import {useAuthStore} from "@/lib/store/authStore";
+import {useState} from 'react';
+import {useRouter} from 'next/navigation';
+import {signIn, SignInRequest} from '@/lib/api/clientApi';
+import {useAuthStore} from '@/lib/store/authStore';
+import {ApiError} from '@/app/api/api';
 
-interface LoginFormData {
-	email: string;
-	password: string;
-}
-
-export default function LoginPage() {
+const SignInPage = () => {
 	const router = useRouter();
-	const { signIn, isLoading, error, clearError } = useAuthStore();
+	const [error, setError] = useState('');
+	const setUser = useAuthStore(( state ) => state.setUser);
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<LoginFormData>();
-
-	const onSubmit = async ( data: LoginFormData ) => {
+	const handleSubmit = async ( formData: FormData ) => {
 		try {
-			await signIn(data);
-			router.push("/recommended");
-		} catch {
-			// помилка вже збережена у store
+			const formValues = Object.fromEntries(formData) as SignInRequest;
+			const user = await signIn(formValues);
+
+			if (user) {
+				setUser(user);
+				router.push('/recommended');
+			}
+		} catch (err) {
+			setError(
+				( err as ApiError ).response?.data?.error ??
+				( err as ApiError ).response?.data?.message ??
+				( err as ApiError ).message ??
+				'Невірний email або пароль'
+			);
 		}
 	};
 
 	return (
-		<>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				{/* Email */}
-				<div>
-					<label>Email</label>
-					<input
-						type="email"
-						placeholder="your@email.com"
-						{...register("email", {
-							required: "Email обов'язковий",
-							pattern: {
-								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-								message: "Невірний формат email",
-							},
-						})}
-					/>
-					{errors.email && (
-						<span>{errors.email.message}</span>
-					)}
-				</div>
-
-				{/* Password */}
-				<div>
-					<label>Пароль</label>
-					<input
-						type="password"
-						placeholder="Твій пароль"
-						{...register("password", {
-							required: "Пароль обов'язковий",
-						})}
-					/>
-					{errors.password && (
-						<span>{errors.password.message}</span>
-					)}
-				</div>
-
-				{/* Server error */}
-				{error && (
-					<div onClick={clearError}>
-						{error}
-					</div>
-				)}
-
-				<button
-					type="submit"
-					disabled={isLoading}
-				>
-					{isLoading ? "Вхід..." : "Увійти"}
-				</button>
+		<div>
+			<h1>Вхід</h1>
+			<form action={handleSubmit}>
+				<label>
+					Email
+					<input type="email" name="email" required/>
+				</label>
+				<label>
+					Пароль
+					<input type="password" name="password" required/>
+				</label>
+				<button type="submit">Увійти</button>
 			</form>
-
-			<p>
-				Ще немає акаунту?{" "}
-				<Link href="/register">
-					Зареєструватись
-				</Link>
-			</p>
-		</>
+			{error && <p style={{ color: 'red' }}>{error}</p>}
+		</div>
 	);
-}
+};
+
+export default SignInPage;

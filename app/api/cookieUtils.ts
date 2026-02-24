@@ -34,7 +34,7 @@ export const setCookiesFromResponse = async (
 
 		// Встановлюємо токени якщо вони є у відповіді
 		if (parsed.accessToken) {
-			cookieStore.set('accessToken', parsed.accessToken, options);
+			cookieStore.set('token', parsed.accessToken, options);
 		}
 		if (parsed.refreshToken) {
 			cookieStore.set('refreshToken', parsed.refreshToken, options);

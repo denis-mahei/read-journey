@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 
 const Layout = ( { children }: { children: ReactNode } ) => {
 	return (
-		<main className="flex flex-col lg:flex-row gap-4 p-5">
+		<main className="flex flex-col lg:flex-row gap-4 p-5 lg:min-h-184">
 			<div className="w-full bg-secondary-bg p-5 rounded-4xl lg:w-1/2">
 				<header>
 					<Image src="/icons/logo-mb.png" alt="logo" width={42} height={17}
@@ -18,12 +18,12 @@ const Layout = ( { children }: { children: ReactNode } ) => {
 				{children}
 			</div>
 			<div
-				className="w-full max-h-87.5 overflow-hidden bg-secondary-bg p-5 rounded-4xl lg:w-1/2 flex items-center justify-center md:hidden">
+				className="w-full overflow-hidden bg-secondary-bg p-5 rounded-4xl lg:w-1/2 flex items-center justify-center">
 				<Image src='/images/iphone-mobile.png' width={255} height={518}
 					   className="block md:hidden translate-y-25"
 					   alt='hero mobile picture'/>
-				<Image src='/images/iphone-desktop.png' width={405} height={834} alt='hero desktop picture'
-					   className="hidden lg:block md:hidden"/>
+				<Image src='/images/iphone-desktop.png' width={411} height={835} alt='hero desktop picture'
+					   className="hidden lg:block translate-y-25"/>
 			</div>
 		</main>
 	);

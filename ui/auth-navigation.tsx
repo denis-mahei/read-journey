@@ -16,7 +16,7 @@ const AuthNavigation = () => {
 		// 2. Чистимо глобальний стан
 		clearIsAuthenticated();
 		// 3. Редірект на логін
-		router.push('/sign-in');
+		router.push('/signin');
 	};
 
 	// Показуємо різний UI залежно від стану авторизації
@@ -27,8 +27,8 @@ const AuthNavigation = () => {
 		</li>
 	) : (
 		<>
-			<li><Link href="/sign-in">Увійти</Link></li>
-			<li><Link href="/sign-up">Реєстрація</Link></li>
+			<li><Link href="/login">Увійти</Link></li>
+			<li><Link href="/register">Реєстрація</Link></li>
 		</>
 	);
 };
