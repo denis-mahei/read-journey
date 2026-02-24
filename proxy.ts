@@ -14,7 +14,7 @@ const authRoutes = ['/login', '/register'];
 // middleware виконується ДО того як сторінка рендериться
 // Це найперший код який бачить запит користувача
 
-export async function middleware( request: NextRequest ) {
+export async function proxy( request: NextRequest ) {
 	const { pathname } = request.nextUrl;
 	const cookieStore = await cookies();
 
