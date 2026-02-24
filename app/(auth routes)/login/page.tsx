@@ -1,97 +1,92 @@
 "use client";
 
-import {useState} from "react";
-import {signIn} from "@/app/lib/api";
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import {SignInSchema} from "@/app/lib/validation";
+import {useForm} from "react-hook-form";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
-import clsx from "clsx";
+import {useAuthStore} from "@/lib/store/authStore";
 
-import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
+interface LoginFormData {
+	email: string;
+	password: string;
+}
 
-const LoginPage = () => {
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
-	const [showPassword, setShowPassword] = useState(false);
+export default function LoginPage() {
+	const router = useRouter();
+	const { signIn, isLoading, error, clearError } = useAuthStore();
 
-	async function handleSubmit(
-		values: { email: string; password: string },
-		{ setSubmitting, setFieldError }: any
-	) {
-		setError(null);
-		setLoading(true);
-		const trimmedValues = {
-			email: values.email.trim(),
-			password: values.password.trim(),
-		}
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<LoginFormData>();
 
+	const onSubmit = async ( data: LoginFormData ) => {
 		try {
-			const result = await signIn(trimmedValues);
-			if (result?.error) {
-				setFieldError('general', result.error);
-			}
-		} catch (e) {
-			setFieldError('general', 'Something went wrong. Please try again!');
-		} finally {
-			setSubmitting(false);
-			setLoading(false);
+			await signIn(data);
+			router.push("/recommended");
+		} catch {
+			// помилка вже збережена у store
 		}
-	}
+	};
 
 	return (
-		<main>
-			<Formik initialValues={{ email: '', password: '' }} validationSchema={SignInSchema}
-					onSubmit={handleSubmit}>
-				{( { errors, touched, isSubmitting } ) => (
-					<Form>
-						<div className='flex flex-col gap-2.5 mb-37'>
-							<div className='flex flex-col gap-2.5'>
-								<div
-									className="w-full bg-input-bg rounded-xl flex items-center gap-2.5 p-3.5 border border-transparent focus-within:border-light-gr">
-									<label className='text-[12px] text-gray-text' htmlFor="email">Email:</label>
-									<Field className='bg-transparent outline-0' id="email" name="email" type="email"
-										   required/>
-								</div>
-								<ErrorMessage name="email" component="div" className='text-red-700 leading-none'/>
-							</div>
+		<>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate>
+				{/* Email */}
+				<div>
+					<label>Email</label>
+					<input
+						type="email"
+						placeholder="your@email.com"
+						{...register("email", {
+							required: "Email обов'язковий",
+							pattern: {
+								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+								message: "Невірний формат email",
+							},
+						})}
+					/>
+					{errors.email && (
+						<span>{errors.email.message}</span>
+					)}
+				</div>
 
-							<div className='flex flex-col gap-2.5'>
-								<div
-									className={clsx(
-										"w-full bg-input-bg rounded-xl flex items-center gap-2.5 p-3.5 border",
-										touched.password && errors.password && 'border-red-700',
-										touched.password && !errors.password && 'border-green-500'
-									)}>
-									<label className='text-[12px] text-gray-text' htmlFor="password">Password:</label>
-									<Field className='bg-transparent outline-0' id="password" name="password"
-										   type={showPassword ? "text" : "password"}
-										   required/>
-									<button onClick={() => setShowPassword(!showPassword)}>
-										{showPassword ? <EyeIcon className='size-6 text-taupe-200'/> :
-											<EyeSlashIcon className='size-6 text-taupe-200'/>}
-									</button>
-								</div>
-								<ErrorMessage name="password" component="div" className='text-red-700 leading-none'/>
-							</div>
-						</div>
+				{/* Password */}
+				<div>
+					<label>Пароль</label>
+					<input
+						type="password"
+						placeholder="Твій пароль"
+						{...register("password", {
+							required: "Пароль обов'язковий",
+						})}
+					/>
+					{errors.password && (
+						<span>{errors.password.message}</span>
+					)}
+				</div>
 
-
-						<div className='flex items-center gap-2.5'>
-							<button
-								className='bg-primary text-secondary-bg text-[14px] font-bold px-7 py-3 rounded-4xl lg:hover:border-light-gr lg:hover:bg-background lg:hover:text-primary lg:cursor-pointer'
-								type="submit"
-								disabled={loading}>
-								{loading ? "Loading..." : "Login"}
-							</button>
-
-							<Link href='/register' className='underline text-gray-text text-sm lg:hover:text-primary'>Don’t
-								have an account? </Link>
-						</div>
-					</Form>
+				{/* Server error */}
+				{error && (
+					<div onClick={clearError}>
+						{error}
+					</div>
 				)}
-			</Formik>
-		</main>
-	);
-};
 
-export default LoginPage;
+				<button
+					type="submit"
+					disabled={isLoading}
+				>
+					{isLoading ? "Вхід..." : "Увійти"}
+				</button>
+			</form>
+
+			<p>
+				Ще немає акаунту?{" "}
+				<Link href="/register">
+					Зареєструватись
+				</Link>
+			</p>
+		</>
+	);
+}

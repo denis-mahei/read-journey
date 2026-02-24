@@ -1,4 +1,4 @@
-import {logout} from "@/app/lib/api";
+import {logout} from "@/lib/api";
 import Image from "next/image";
 import Home from "@/app/page";
 

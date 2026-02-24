@@ -1,113 +1,68 @@
-"use client";
+'use client';
 
-import {useState} from "react";
-import {signUp} from "@/app/lib/api";
-import Link from "next/link";
-import {SignUpSchema} from '@/app/lib/validation';
-import {ErrorMessage, Field, Form, Formik} from "formik";
-import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
+import {useState} from 'react';
+import {useRouter} from 'next/navigation';
+import {signUp, SignUpRequest} from '@/lib/api/clientApi';
+import {useAuthStore} from '@/lib/store/authStore';
+import {ApiError} from '@/app/api/api';
 
-import clsx from "clsx";
+const SignUpPage = () => {
+	const router = useRouter();
+	const [error, setError] = useState('');
+	// Беремо метод з глобального стора щоб записати юзера після реєстрації
+	const setUser = useAuthStore(( state ) => state.setUser);
 
-
-const RegisterPage = () => {
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
-	const [showPassword, setShowPassword] = useState(false);
-
-	async function handleSubmit(
-		values: { name: string; email: string; password: string },
-		{ setSubmitting, setFieldError }: any
-	) {
-		setError(null);
-		setLoading(true);
-		const trimmedValues = {
-			name: values.name.trim(),
-			email: values.email.trim(),
-			password: values.password.trim(),
-		}
-
+	// form action={handleSubmit} — це Next.js/React підхід
+	// FormData автоматично збирає всі поля форми за атрибутом name
+	const handleSubmit = async ( formData: FormData ) => {
 		try {
-			const result = await signUp(trimmedValues);
-			if (result?.error) {
-				setFieldError('general', result.error);
+			// Object.fromEntries перетворює FormData на звичайний об'єкт
+			// { name: 'John', email: 'john@gmail.com', password: '12345678' }
+			const formValues = Object.fromEntries(formData) as SignUpRequest;
+
+			// Виклик йде до /api/auth/signup (наш Route Handler)
+			// Route Handler вже сам іде до стороннього API і встановлює cookies
+			const user = await signUp(formValues);
+
+			if (user) {
+				// Записуємо юзера у глобальний стан (Zustand)
+				setUser(user);
+				// Редірект на головну сторінку після реєстрації
+				router.push('/recommended');
 			}
-		} catch (e) {
-			setFieldError('general', 'Something went wrong. Please try again!');
-		} finally {
-			setSubmitting(false);
-			setLoading(false);
+		} catch (err) {
+			setError(
+				( err as ApiError ).response?.data?.error ??
+				( err as ApiError ).response?.data?.message ??
+				( err as ApiError ).message ??
+				'Oops... щось пішло не так'
+			);
 		}
-	}
+	};
 
 	return (
-		<main>
-			<Formik initialValues={{ name: '', email: '', password: '' }} validationSchema={SignUpSchema}
-					onSubmit={handleSubmit}>
-				{( { errors, touched, isSubmitting } ) => (
-					<Form>
-						<div className='flex flex-col gap-2.5 mb-5'>
-
-							<div className='flex flex-col gap-2.5'>
-								<div
-									className="w-full bg-input-bg rounded-xl flex items-center gap-2.5 p-3.5 border border-transparent focus-within:border-light-gr">
-									<label className='text-[12px] text-gray-text' htmlFor="name">Name:</label>
-									<Field className='bg-transparent outline-0' id="name" name="name"
-										   type="text" required/>
-								</div>
-								<ErrorMessage name='name' component='div' className='text-red-700 leading-none'/>
-							</div>
-
-							<div className='flex flex-col gap-2.5'>
-								<div
-									className="w-full bg-input-bg rounded-xl flex items-center gap-2.5 p-3.5 border border-transparent focus-within:border-light-gr">
-									<label className='text-[12px] text-gray-text' htmlFor="email">Email:</label>
-									<Field className='bg-transparent outline-0' id="email" name="email" type="email"
-										   required/>
-								</div>
-								<ErrorMessage name="email" component="div" className='text-red-700 leading-none'/>
-							</div>
-
-							<div className='flex flex-col gap-2.5'>
-								<div
-									className={clsx(
-										"w-full bg-input-bg rounded-xl flex items-center gap-2.5 p-3.5 border",
-										touched.password && errors.password && 'border-red-700',
-										touched.password && !errors.password && 'border-green-500'
-									)}>
-									<label className='text-[12px] text-gray-text' htmlFor="password">Password:</label>
-									<Field className='bg-transparent outline-0' id="password" name="password"
-										   type={showPassword ? "text" : "password"}
-										   required/>
-									<button onClick={() => setShowPassword(!showPassword)}>
-										{showPassword ? <EyeIcon className='size-6 text-taupe-200'/> :
-											<EyeSlashIcon className='size-6 text-taupe-200'/>}
-									</button>
-
-								</div>
-								<ErrorMessage name="password" component="div" className='text-red-700 leading-none'/>
-							</div>
-						</div>
-
-
-						<div className='flex items-center gap-2.5'>
-							<button
-								className='bg-primary text-secondary-bg text-[14px] font-bold px-7 py-3 rounded-4xl lg:hover:border-light-gr lg:hover:bg-background lg:hover:text-primary lg:cursor-pointer'
-								type="submit"
-								disabled={loading}>
-								{loading ? "Loading..." : "Registration"}
-							</button>
-
-							<Link href='/login'
-								  className='underline text-gray-text text-sm lg:hover:text-primary'>Already
-								have an
-								account?</Link>
-						</div>
-					</Form>
-				)}
-			</Formik>
-		</main>
+		<div>
+			<h1>Реєстрація</h1>
+			{/* action замість onSubmit — Next.js патерн для роботи з FormData */}
+			<form action={handleSubmit}>
+				<label>
+					Ім&#39;я
+					{/* name="name" — це ключ у FormData */}
+					<input type="text" name="name" required minLength={2}/>
+				</label>
+				<label>
+					Email
+					<input type="email" name="email" required/>
+				</label>
+				<label>
+					Пароль
+					<input type="password" name="password" required minLength={8}/>
+				</label>
+				<button type="submit">Зареєструватись</button>
+			</form>
+			{error && <p style={{ color: 'red' }}>{error}</p>}
+		</div>
 	);
 };
 
-export default RegisterPage;
+export default SignUpPage;
