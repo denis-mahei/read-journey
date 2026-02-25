@@ -13,9 +13,12 @@
     --color-secondary-bg: #1f1f1f;
     --color-span: #E3E3E380;
     --color-light-gr: #F9F9F933;
+    --text-sm: 12px;
+    --text-3xl: 2rem;
+    --text-6xl: 4rem;
 }
 
 
 body {
-    @apply bg-background text-primary;
+    @apply bg-background text-primary ;
 }

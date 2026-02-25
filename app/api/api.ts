@@ -1,4 +1,7 @@
+"use server"
+
 import axios from 'axios';
+import {cookies} from "next/headers";
 
 
 export const nextServer = axios.create({
@@ -22,4 +25,12 @@ export type ApiError = {
 	};
 	message: string;
 	status: number;
+};
+
+
+export const getAuthHeaders = async () => {
+	const cookieStore = await cookies();
+	return {
+		Cookie: cookieStore.toString(),
+	};
 };

@@ -49,3 +49,8 @@ export const getMe = async (): Promise<User> => {
 	const res = await nextServer.get<User>('/auth/me');
 	return res.data;
 };
+
+export const getRecommendedBooks = async () => {
+	const res = await nextServer.get('/books/recommend');
+	return res.data;
+};

@@ -28,3 +28,14 @@ export const getServerMe = async (): Promise<User> => {
 	});
 	return data;
 };
+
+export const getRecommendedBooks = async () => {
+	const cookieStore = await cookies();
+	console.log('cookies:', cookieStore.toString());
+	const { data } = await api.get('/books/recommend', {
+		headers: {
+			Cookie: cookieStore.toString(),
+		},
+	});
+	return data;
+};
