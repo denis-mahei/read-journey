@@ -8,7 +8,7 @@ import {setCookiesFromResponse} from '../../cookieUtils';
 
 export async function GET() {
 	const cookieStore = await cookies();
-	const accessToken = cookieStore.get('accessToken')?.value;
+	const accessToken = cookieStore.get('accessToken')?.value ?? cookieStore.get('token')?.value;
 	const refreshToken = cookieStore.get('refreshToken')?.value;
 
 	// Якщо accessToken є — сесія валідна, не потрібно йти до API

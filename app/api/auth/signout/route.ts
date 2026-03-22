@@ -16,6 +16,7 @@ export async function POST() {
 		// Бо користувач хоче вийти, і ми маємо це зробити на клієнті
 	} finally {
 		cookieStore.delete('accessToken');
+		cookieStore.delete('token');
 		cookieStore.delete('refreshToken');
 	}
 

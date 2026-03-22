@@ -1,41 +1,34 @@
 import {cookies} from 'next/headers';
-import {api} from '@/app/api/api';
-import {User} from './clientApi';
+import {api} from '@/lib/api/http';
+import {RecommendedBooksResponse, User} from './clientApi';
 
-// Ці функції використовуються на СЕРВЕРІ Next.js
-// (у middleware, серверних компонентах, Route Handlers)
-//
-// Відмінність від clientApi: тут ми вручну передаємо cookies у headers
-// бо на сервері браузер не може зробити це автоматично
+const getServerAuthHeaders = async () => {
+	const cookieStore = await cookies();
+	const accessToken = cookieStore.get('accessToken')?.value ?? cookieStore.get('token')?.value;
+
+	return {
+		Cookie: cookieStore.toString(),
+		...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+	};
+};
 
 export const checkServerSession = async () => {
-	const cookieStore = await cookies();
-	// Повний response (не тільки data) потрібен щоб дістати нові set-cookie заголовки
 	const res = await api.get('/users/current/refresh', {
-		headers: {
-			Cookie: cookieStore.toString(),
-		},
+		headers: await getServerAuthHeaders(),
 	});
 	return res;
 };
 
 export const getServerMe = async (): Promise<User> => {
-	const cookieStore = await cookies();
 	const { data } = await api.get<User>('/users/current', {
-		headers: {
-			Cookie: cookieStore.toString(),
-		},
+		headers: await getServerAuthHeaders(),
 	});
 	return data;
 };
 
 export const getRecommendedBooks = async () => {
-	const cookieStore = await cookies();
-	console.log('cookies:', cookieStore.toString());
-	const { data } = await api.get('/books/recommend', {
-		headers: {
-			Cookie: cookieStore.toString(),
-		},
+	const { data } = await api.get<RecommendedBooksResponse>('/books/recommend', {
+		headers: await getServerAuthHeaders(),
 	});
 	return data;
 };

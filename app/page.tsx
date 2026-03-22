@@ -3,7 +3,7 @@ import {redirect} from "next/navigation";
 
 export default async function Home() {
 	const store = await cookies();
-	if (store.get('token')) {
+	if (store.get('accessToken') || store.get('token')) {
 		redirect('/recommended');
 	} else {
 		redirect('/register');

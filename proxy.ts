@@ -1,14 +1,13 @@
 import {NextRequest, NextResponse} from 'next/server';
 import {cookies} from 'next/headers';
-import {parse} from 'cookie';
-import {api} from './app/api/api';
+import {api} from '@/lib/api/http';
 import {setCookiesFromResponse} from './app/api/cookieUtils';
 
 // Приватні маршрути — тільки для авторизованих
 const privateRoutes = ['/recommended', '/profile'];
 
 // Auth маршрути — тільки для НЕавторизованих
-// Якщо авторизований юзер іде на /sign-in — редіректимо його на /recommended
+// Якщо авторизований юзер іде на /login або /register — редіректимо його на /recommended
 const authRoutes = ['/login', '/register'];
 
 // middleware виконується ДО того як сторінка рендериться
@@ -18,7 +17,7 @@ export async function proxy( request: NextRequest ) {
 	const { pathname } = request.nextUrl;
 	const cookieStore = await cookies();
 
-	const accessToken = cookieStore.get('accessToken')?.value;
+	const accessToken = cookieStore.get('accessToken')?.value ?? cookieStore.get('token')?.value;
 	const refreshToken = cookieStore.get('refreshToken')?.value;
 
 	const isPrivateRoute = privateRoutes.some(( route ) => pathname.startsWith(route));
@@ -54,7 +53,7 @@ export async function proxy( request: NextRequest ) {
 
 	// Сценарій 2: немає жодного токена
 	if (!accessToken) {
-		// Auth маршрут (/sign-in, /sign-up) — дозволяємо
+		// Auth маршрут (/login, /register) — дозволяємо
 		if (isAuthRoute) return NextResponse.next();
 
 		// Приватний маршрут — редіректимо на логін

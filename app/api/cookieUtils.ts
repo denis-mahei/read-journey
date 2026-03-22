@@ -1,4 +1,3 @@
-import {parse} from 'cookie';
 import {ReadonlyRequestCookies} from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 
 // Це допоміжна функція яку ми будемо використовувати в кількох Route Handlers
@@ -20,24 +19,43 @@ export const setCookiesFromResponse = async (
 	const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
 
 	for (const cookieStr of cookieArray) {
-		// parse() перетворює рядок "accessToken=abc; Path=/; Max-Age=900"
-		// на об'єкт { accessToken: 'abc', Path: '/', 'Max-Age': '900' }
-		const parsed = parse(cookieStr);
+		const parts = cookieStr.split(';').map(( part ) => part.trim());
+		if (parts.length === 0) continue;
+
+		const [nameValue, ...attributes] = parts;
+		const eqIndex = nameValue.indexOf('=');
+		if (eqIndex === -1) continue;
+
+		const cookieName = nameValue.slice(0, eqIndex);
+		const cookieValue = nameValue.slice(eqIndex + 1);
+
+		const attrs: Record<string, string | true> = {};
+		for (const attr of attributes) {
+			const attrEqIndex = attr.indexOf('=');
+			if (attrEqIndex === -1) {
+				attrs[attr.toLowerCase()] = true;
+				continue;
+			}
+			const key = attr.slice(0, attrEqIndex).toLowerCase();
+			const value = attr.slice(attrEqIndex + 1);
+			attrs[key] = value;
+		}
 
 		const options = {
-			expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-			path: parsed.Path ?? '/',
-			maxAge: parsed[ 'Max-Age' ] ? Number(parsed[ 'Max-Age' ]) : undefined,
+			expires: typeof attrs.expires === 'string' ? new Date(attrs.expires) : undefined,
+			path: typeof attrs.path === 'string' ? attrs.path : '/',
+			maxAge: typeof attrs[ 'max-age' ] === 'string' ? Number(attrs[ 'max-age' ]) : undefined,
 			httpOnly: true,
 			secure: process.env.NODE_ENV === 'production',
 		};
 
 		// Встановлюємо токени якщо вони є у відповіді
-		if (parsed.accessToken) {
-			cookieStore.set('token', parsed.accessToken, options);
+		if (cookieName === 'accessToken' && cookieValue) {
+			cookieStore.set('accessToken', cookieValue, options);
+			cookieStore.set('token', cookieValue, options);
 		}
-		if (parsed.refreshToken) {
-			cookieStore.set('refreshToken', parsed.refreshToken, options);
+		if (cookieName === 'refreshToken' && cookieValue) {
+			cookieStore.set('refreshToken', cookieValue, options);
 		}
 	}
 

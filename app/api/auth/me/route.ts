@@ -1,19 +1,13 @@
 import {NextResponse} from 'next/server';
-import {cookies} from 'next/headers';
-import {api, ApiError} from '../../api';
+import {api, ApiError, getAuthHeaders} from '../../api';
 
 // Приватний ендпоінт — повертає дані поточного користувача
 // Використовується в AuthProvider після checkSession
 
 export async function GET() {
-	const cookieStore = await cookies();
-
 	try {
 		const { data } = await api.get('/users/current', {
-			headers: {
-				// Обов'язково передаємо cookies — без них API не знає хто робить запит
-				Cookie: cookieStore.toString(),
-			},
+			headers: await getAuthHeaders(),
 		});
 
 		return NextResponse.json(data);
