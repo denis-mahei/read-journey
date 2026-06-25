@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+# 📚 Read Journey
+
+A modern web application for managing your personal reading library, tracking reading progress, and discovering new books.
+
+## ✨ Features
+
+### 🔐 Authentication
+
+- User registration
+- User login
+- Access & refresh token authorization
+- Get current user information
+- Secure logout
+
+### 📖 Book Management
+
+- Browse recommended books
+- Add custom books
+- Add books from recommendations
+- Remove books from your library
+- View your personal collection
+- Get detailed book information
+
+### 📈 Reading Progress
+
+- Start reading a book
+- Finish reading a book
+- Track reading activity
+- Remove reading progress
+
+---
+
+## 🛠 Tech Stack
+
+- Next.js
+- TypeScript
+- tailwindcss
+- REST API
+
+---
+
+## 🚀 Getting Started
+
+### Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_URL=your_api_url
+```
 
-## Learn More
+### Run Development Server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+http://localhost:3000
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📡 API Overview
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ⏿ Backend
+
+API Documentation: [Read Journey API Docs](https://readjourney.b.goit.study/api-docs)
+
+---
+
+### 🔐 Authentication
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| POST | `/users/signup` | Register a new user |
+| POST | `/users/signin` | Sign in |
+| GET | `/users/current` | Get current user information |
+| GET | `/users/current/refresh` | Refresh access and refresh tokens |
+| POST | `/users/signout` | Sign out |
+
+### Books
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | `/books/recommend` | Get recommended books |
+| POST | `/books/add` | Add a custom book |
+| POST | `/books/add/{id}` | Add a recommended book |
+| DELETE | `/books/remove/{id}` | Remove a book from the library |
+| GET | `/books/own` | Get user's books |
+| POST | `/books/reading/start` | Start reading a book |
+| POST | `/books/reading/finish` | Finish reading a book |
+| DELETE | `/books/reading` | Remove reading progress |
+| GET | `/books/{id}` | Get book details |
+
+---
+
+## 🚀 Live Demo
+
+Coming soon...
