@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+:root {
+    --background: #141414;
+    --foreground: #f9f9f9;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-primary: var(--foreground);
+    --color-gray-text: #686868;
+    --color-input-bg: #262626;
+    --color-secondary-bg: #1f1f1f;
+    --color-span: #E3E3E380;
+    --color-light-gr: #F9F9F933;
+    --color-pseudo-blue: #4f92f7;
+    --text-sm: 12px;
+    --text-3xl: 2rem;
+    --text-6xl: 4rem;
+}
+
+
+body {
+    @apply bg-background text-primary ;
+}
+
+.pseudo-blue {
+    @apply text-primary relative after:content-[''] after:rounded-md after:absolute after:left-0 after:-bottom-1.5 after:w-full after:h-1 after:bg-pseudo-blue;
+}
