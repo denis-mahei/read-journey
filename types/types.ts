@@ -6,6 +6,7 @@ export interface SignInRequest {
 export interface SignUpRequest extends SignInRequest {
   name: string;
 }
+
 export interface User {
   name: string;
   email: string;
