@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Gilroy from 'next/font/local';
 import './globals.css';
+import AuthProvider from '@/app/providers/auth-provider';
 
 const gilroy = Gilroy({
   src: [
@@ -25,7 +26,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${gilroy.className} antialiased`}>{children}</body>
+      <body className={`${gilroy.className} antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

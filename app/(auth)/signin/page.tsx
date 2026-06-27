@@ -5,31 +5,34 @@ import AuthWrapper from '@/app/ui/auth-wrapper';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn } from '@/services/client-api';
-import { ApiError } from '@/app/api/api';
+import { getApiErrorMessage } from '@/app/api/api';
+import { ROUTES } from '@/constants/routes';
 import { SignInRequest } from '@/types/types';
+import { useAuthStore } from '@/store/auth-store';
 
 const SignInPage = () => {
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const handleSubmit = async (formData: FormData) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError('');
+
     try {
       const formValues: SignInRequest = {
-        email: formData.get('email') as string,
+        email: (formData.get('email') as string).trim(),
         password: formData.get('password') as string,
       };
 
       const res = await signIn(formValues);
-      if (res) {
-        router.push('/recommended');
-      } else {
-        setError('Invalid Credentials');
-      }
+      useAuthStore.getState().authenticate(res);
+      router.push(ROUTES.recommended);
     } catch (error) {
-      setError(
-        (error as ApiError).response?.data?.error ??
-          (error as ApiError).message ??
-          'Oops... Something went wrong.',
-      );
+      setError(getApiErrorMessage(error, 'Oops... Something went wrong.'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -45,9 +48,11 @@ const SignInPage = () => {
           Password
           <input type="password" name="password" required />
         </label>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
         <p>OR</p>
-        <Link href="/signup">Don&apos;t have an account?</Link>
+        <Link href={ROUTES.signUp}>Don&apos;t have an account?</Link>
       </form>
       {error && <p>{error}</p>}
     </AuthWrapper>

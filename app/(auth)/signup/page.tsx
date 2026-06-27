@@ -5,32 +5,37 @@ import AuthWrapper from '@/app/ui/auth-wrapper';
 import Link from 'next/link';
 import { signUp } from '@/services/client-api';
 import { useRouter } from 'next/navigation';
-import { ApiError } from '@/app/api/api';
+import { getApiErrorMessage } from '@/app/api/api';
+import { ROUTES } from '@/constants/routes';
 import { SignUpRequest } from '@/types/types';
+import { useAuthStore } from '@/store/auth-store';
 
 const SignUpPage = () => {
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setError('');
+
     try {
       const formValues: SignUpRequest = {
-        name: formData.get('name') as string,
-        email: formData.get('email') as string,
+        name: (formData.get('name') as string).trim(),
+        email: (formData.get('email') as string).trim(),
         password: formData.get('password') as string,
       };
       const res = await signUp(formValues);
-      if (res) {
-        router.push('/recommended');
-      } else {
-        setError('Invalid Credentials');
-      }
+
+      useAuthStore.getState().authenticate(res);
+
+      router.push(ROUTES.recommended);
     } catch (error) {
-      setError(
-        (error as ApiError).response?.data?.error ??
-          (error as ApiError).message ??
-          'Oops.. Something went wrong.',
-      );
+      setError(getApiErrorMessage(error, 'Oops.. Something went wrong.'));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -50,9 +55,11 @@ const SignUpPage = () => {
           Password
           <input type="password" name="password" required />
         </label>
-        <button type="submit">Register</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Registering...' : 'Register'}
+        </button>
         <p>OR</p>
-        <Link href="/signin">Already have an account? Sign in</Link>
+        <Link href={ROUTES.signIn}>Already have an account? Sign in</Link>
       </form>
       {error && <p>{error}</p>}
     </AuthWrapper>

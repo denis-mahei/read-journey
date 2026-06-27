@@ -1,13 +1,37 @@
-import { createStore } from 'zustand/vanilla';
-import { CurrentResponse } from '@/types/types';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-export const useAuthStore = createStore((set) => ({
+import { AuthState, IAuthStore } from '@/types/types';
+
+const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
-  setUser: (user: CurrentResponse) => {
-    set(() => ({ isAuthenticated: true, user }));
-  },
-  clearIsAuthenticated: () => {
-    set(() => ({ user: null, isAuthenticated: false }));
-  },
-}));
+  token: null,
+  refreshToken: null,
+};
+
+export const useAuthStore = create<IAuthStore>()(
+  persist(
+    (set) => ({
+      ...initialState,
+      logout: () => {
+        set(initialState);
+      },
+      authenticate: (authData) => {
+        set({
+          user: {
+            name: authData.name,
+            email: authData.email,
+          },
+          token: authData.token,
+          refreshToken: authData.refreshToken,
+          isAuthenticated: true,
+        });
+      },
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);

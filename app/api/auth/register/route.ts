@@ -1,17 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ApiError, backendApi } from '@/app/api/api';
+import {
+  ApiError,
+  backendApi,
+  getApiErrorMessage,
+} from '@/app/api/api';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
   try {
     const apiRes = await backendApi.post('/users/signup', body);
-    return apiRes.data;
+    return NextResponse.json(apiRes.data, { status: apiRes.status });
   } catch (error) {
-    return NextResponse.json({
-      error:
-        (error as ApiError).response?.data?.error ??
-        (error as ApiError).message,
-    });
+    const status = (error as ApiError).response?.status ?? 500;
+    return NextResponse.json(
+      { error: getApiErrorMessage(error) },
+      { status },
+    );
   }
 }

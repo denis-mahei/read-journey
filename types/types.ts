@@ -29,3 +29,14 @@ export interface RefreshResponse {
 export interface SignOutResponse {
   message: string;
 }
+
+export interface IAuthStore {
+  user: User | null;
+  token: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+  logout: () => void;
+  authenticate: (authData: AuthResponse) => void;
+}
+
+export type AuthState = Omit<IAuthStore, 'authenticate' | 'logout'>;
