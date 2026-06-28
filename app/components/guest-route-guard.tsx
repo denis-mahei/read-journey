@@ -29,7 +29,7 @@ const GuestRouteGuard = ({ children }: GuestRouteGuardProps) => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center">
+    <div className="min-h-screen flex flex-col md:justify-center">
       <div className="flex flex-col gap-y-2.5 p-5 lg:flex-row lg:gap-4 lg:w-full md:p-8 lg:p-8 lg:min-h-184">
         {children}
         <div className="min-h-83.75 flex md:hidden lg:flex  items-center justify-center w-full lg:w-1/2 bg-secondary-bg rounded-4xl relative overflow-hidden">
