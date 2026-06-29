@@ -14,14 +14,16 @@
     --color-span: #E3E3E380;
     --color-light-gr: #F9F9F933;
     --color-pseudo-blue: #4f92f7;
-    --text-sm: 12px;
+    --color-gray-border: #F9F9F91A;
+    --text-sm: 14px;
     --text-3xl: 2rem;
     --text-6xl: 4rem;
+    --breakpoint-lg: 75rem;
 }
 
 
 body {
-    @apply bg-background text-primary ;
+    @apply bg-background text-primary;
 }
 
 .pseudo-blue {

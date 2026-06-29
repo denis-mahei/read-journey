@@ -1,9 +1,9 @@
-export default async function Home () {
+import Header from '@/app/components/header';
 
-	return (
-		<div className="flex">
-			Home
-		</div>
-	);
+export default function Home() {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <Header />
+    </div>
+  );
 }
-
