@@ -9,13 +9,22 @@ import { getApiErrorMessage } from '@/app/api/api';
 import { ROUTES } from '@/constants/routes';
 import { SignUpRequest } from '@/types/types';
 import { useAuthStore } from '@/store/auth-store';
+import Button from '@/app/ui/button';
+import { useForm } from 'react-hook-form';
+import NameField from '@/app/ui/name-field';
+import EmailField from '@/app/ui/email-field';
+import PasswordField from '@/app/ui/password-field';
 
 const SignUpPage = () => {
+  const form = useForm<SignUpRequest>({
+    mode: 'onTouched',
+  });
+  const { handleSubmit } = form;
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (formData: FormData) => {
+  const onSubmit = async (data: SignUpRequest) => {
     if (isSubmitting) return;
 
     setIsSubmitting(true);
@@ -23,9 +32,9 @@ const SignUpPage = () => {
 
     try {
       const formValues: SignUpRequest = {
-        name: (formData.get('name') as string).trim(),
-        email: (formData.get('email') as string).trim(),
-        password: formData.get('password') as string,
+        name: (data.name as string).trim(),
+        email: (data.email as string).trim(),
+        password: data.password as string,
       };
       const res = await signUp(formValues);
 
@@ -33,7 +42,9 @@ const SignUpPage = () => {
 
       router.push(ROUTES.recommended);
     } catch (error) {
-      setError(getApiErrorMessage(error, 'Oops.. Something went wrong.'));
+      setError(
+        getApiErrorMessage(error, 'Oops.. Something went wrong.'),
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -41,25 +52,22 @@ const SignUpPage = () => {
 
   return (
     <AuthWrapper>
-      <h1>Registration</h1>
-      <form action={handleSubmit} className="flex flex-col">
-        <label>
-          Username
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Registering...' : 'Register'}
-        </button>
-        <p>OR</p>
-        <Link href={ROUTES.signIn}>Already have an account? Sign in</Link>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <NameField form={form} />
+        <EmailField form={form} />
+        <PasswordField form={form} />
+        <div className="flex items-center gap-x-3.5">
+          <Button>Registration</Button>
+          <Link
+            href={ROUTES.signIn}
+            className="text-xs underline text-gray-text"
+          >
+            Already have an account?
+          </Link>
+        </div>
       </form>
       {error && <p>{error}</p>}
     </AuthWrapper>

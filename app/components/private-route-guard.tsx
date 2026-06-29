@@ -27,7 +27,7 @@ const PrivateRouteGuard = ({ children }: PrivateRouteGuardProps) => {
     return null;
   }
 
-  return <>{children}</>;
+  return <div className="p-5 md:p-8">{children}</div>;
 };
 
 export default PrivateRouteGuard;

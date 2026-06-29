@@ -1,9 +1,15 @@
 import React from 'react';
 import Icon from '@/app/components/icon';
 
-const Logo = () => {
+type LogoProps = {
+  className?: string;
+};
+
+const Logo = ({
+  className = 'flex items-center gap-1 mb-10 md:mb-39.25',
+}: LogoProps) => {
   return (
-    <div className="flex items-center gap-1 mb-10 md:mb-39.25">
+    <div className={className}>
       <Icon name="logo" width={42} height={17} viewBox="0 0 42 17" />
       <span className="hidden md:flex md:text-[18px] uppercase font-bold leading-none translate-y-px">
         read journey
