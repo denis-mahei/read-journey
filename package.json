@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "axios": "^1.13.5",
+    "axios": "^1.16.0",
     "clsx": "^2.1.1",
     "cookie": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
-    "next": "16.1.6",
+    "next": "16.2.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.2",
