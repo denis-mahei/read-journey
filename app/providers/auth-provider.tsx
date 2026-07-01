@@ -12,6 +12,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const token = useAuthStore((state) => state.token);
   const authenticate = useAuthStore((state) => state.authenticate);
   const logOut = useAuthStore((state) => state.logout);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {

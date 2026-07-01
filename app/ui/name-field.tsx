@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { SignUpRequest } from '@/types/types';
+import { SignUpRequest } from '@/types/definitions';
 
 interface NameFieldProps {
   form: UseFormReturn<SignUpRequest>;

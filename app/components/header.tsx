@@ -1,23 +1,25 @@
 import React from 'react';
 import Logo from '@/app/components/logo';
-import Icon from '@/app/components/icon';
-import MainWrapper from '@/app/ui/main-wrapper';
+import UserNav from '@/app/components/user-nav';
+import Logout from '@/app/(auth)/logout/logout';
+import UserBar from '@/app/components/user-bar';
 
 const Header = () => {
   return (
-    <MainWrapper>
-      <header className="flex justify-between items-center">
-        <Logo className="flex gap-1 mb-0" />
-        <button className="h-7">
-          <Icon
-            name="burger"
-            width={28}
-            height={28}
-            viewBox="0 0 28 28"
-          />
-        </button>
-      </header>
-    </MainWrapper>
+    <header className="p-5 bg-secondary-bg rounded-2xl">
+      <div className="flex justify-between items-center">
+        <Logo className="flex gap-1 mb-0 lg:hidden" title="" />
+        <Logo
+          className="hidden gap-1 mb-0 lg:flex"
+          title="read journey"
+        />
+        <UserNav />
+        <div className="hidden md:flex items-center gap-4">
+          <UserBar />
+          <Logout />
+        </div>
+      </div>
+    </header>
   );
 };
 

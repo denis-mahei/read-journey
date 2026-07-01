@@ -10,7 +10,8 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
   return (
     <PrivateRouteGuard>
       <Header />
-      {children}
+      <div className="h-2.5" />
+      <main className="lg:flex lg:gap-2">{children}</main>
     </PrivateRouteGuard>
   );
 };

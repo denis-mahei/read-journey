@@ -7,7 +7,7 @@ import { signUp } from '@/services/client-api';
 import { useRouter } from 'next/navigation';
 import { getApiErrorMessage } from '@/app/api/api';
 import { ROUTES } from '@/constants/routes';
-import { SignUpRequest } from '@/types/types';
+import { SignUpRequest } from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
 import Button from '@/app/ui/button';
 import { useForm } from 'react-hook-form';
@@ -63,7 +63,7 @@ const SignUpPage = () => {
           <Button>Registration</Button>
           <Link
             href={ROUTES.signIn}
-            className="text-xs underline text-gray-text"
+            className="text-[10px] underline text-gray-text"
           >
             Already have an account?
           </Link>

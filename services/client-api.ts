@@ -4,7 +4,7 @@ import {
   CurrentResponse,
   SignInRequest,
   SignUpRequest,
-} from '@/types/types';
+} from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
 
 const clientApi = axios.create({
@@ -29,7 +29,10 @@ clientApi.interceptors.request.use(
 );
 
 export const signUp = async (data: SignUpRequest) => {
-  const res = await clientApi.post<AuthResponse>('/auth/register', data);
+  const res = await clientApi.post<AuthResponse>(
+    '/auth/register',
+    data,
+  );
   return res.data;
 };
 
@@ -47,9 +50,27 @@ export const signIn = async (data: SignInRequest) => {
 
 export const current = async () => {
   try {
-    const res = await clientApi.get<CurrentResponse>('/auth/current');
-    return res.data;
+    const { data } =
+      await clientApi.get<CurrentResponse>('/auth/current');
+    return data;
   } catch (error) {
     throw error;
   }
+};
+
+export const getRecommendedBooks = async ({
+  page,
+  perPage,
+  title,
+  author,
+}: {
+  page: number;
+  perPage: number;
+  title?: string;
+  author?: string;
+}) => {
+  const response = await clientApi.get('/books/recommend', {
+    params: { page, limit: perPage, title, author },
+  });
+  return response.data;
 };

@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from '@/services/client-api';
 import { getApiErrorMessage } from '@/app/api/api';
 import { ROUTES } from '@/constants/routes';
-import { SignInRequest } from '@/types/types';
+import { SignInRequest } from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
 import { useForm } from 'react-hook-form';
 import Button from '@/app/ui/button';

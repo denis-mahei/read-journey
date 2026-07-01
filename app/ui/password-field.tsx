@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SignInRequest } from '@/types/types';
+import { SignInRequest } from '@/types/definitions';
 import { UseFormReturn } from 'react-hook-form';
 import Icon from '@/app/components/icon';
 import clsx from 'clsx';

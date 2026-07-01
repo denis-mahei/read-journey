@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-import { AuthState, IAuthStore } from '@/types/types';
+import { AuthState, IAuthStore } from '@/types/definitions';
 
 const initialState: AuthState = {
   isAuthenticated: false,
