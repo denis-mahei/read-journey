@@ -7,9 +7,10 @@ import Button from '@/app/ui/button';
 interface BookModalProps {
   book: IBook;
   onClose: () => void;
+  onAdd: (id: string) => void;
 }
 
-const BookModal = ({ book, onClose }: BookModalProps) => {
+const BookModal = ({ book, onClose, onAdd }: BookModalProps) => {
   return (
     <div className="fixed flex items-center inset-0 z-50 justify-center bg-backdrop px-5">
       <div className=" w-full max-w-sm border  border-[#68686820] bg-secondary-bg p-10 rounded-xl relative">
@@ -34,7 +35,11 @@ const BookModal = ({ book, onClose }: BookModalProps) => {
           </h3>
           <p className="mb-1 text-xs text-gray-text">{book.author}</p>
           <p className="mb-5">{book.totalPages} pages</p>
-          <Button variant="secondary" type="button">
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => onAdd(book._id)}
+          >
             Add to library
           </Button>
         </div>

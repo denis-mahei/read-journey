@@ -1,7 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getRecommendedBooks } from '@/services/client-api';
+import {
+  addBookFromRecommended,
+  getOwnLibrary,
+  getRecommendedBooks,
+} from '@/services/client-api';
 import MainWrapper from '@/app/ui/main-wrapper';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BookList from '@/app/components/book-list';
@@ -13,6 +17,7 @@ import {
 } from 'react-icons/md';
 import clsx from 'clsx';
 import BookModal from '@/app/components/book-modal';
+import { toast } from 'sonner';
 
 interface RecommendedBooksProps {
   page: number;
@@ -56,6 +61,20 @@ const RecommendedBooks = ({ page }: RecommendedBooksProps) => {
     );
   };
 
+  const handleAddBook = async (id: string) => {
+    const ownLibrary = await getOwnLibrary();
+    const isDuplicate = ownLibrary.some(
+      (item) => item.title === selectedBook?.title,
+    );
+    if (isDuplicate) {
+      toast.error('This book already exists');
+    } else {
+      await addBookFromRecommended(id);
+      toast.success('Book was added successfully.');
+    }
+    setSelectedBook(null);
+  };
+
   return (
     <MainWrapper>
       <div className="flex justify-between md:justify-end lg:justify-between mb-5.5 w-full">
@@ -92,6 +111,7 @@ const RecommendedBooks = ({ page }: RecommendedBooksProps) => {
       />
       {selectedBook && (
         <BookModal
+          onAdd={handleAddBook}
           book={selectedBook}
           onClose={() => setSelectedBook(null)}
         />
