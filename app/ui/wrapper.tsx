@@ -1,5 +1,4 @@
 import React from 'react';
-import LinkToHome from '@/app/ui/link-to-home';
 
 interface WrapperProps {
   children: React.ReactNode;
