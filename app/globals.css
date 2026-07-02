@@ -15,11 +15,12 @@
     --color-light-gr: #F9F9F933;
     --color-pseudo-blue: #4f92f7;
     --color-gray-border: #F9F9F91A;
+    --color-dropdown-b: #3e3e3e;
     --color-backdrop: rgba(20, 20, 20, 0.6);
     --text-sm: 14px;
     --text-3xl: 2rem;
     --text-6xl: 4rem;
-    --breakpoint-lg: 64rem;
+    --breakpoint-lg: 80rem;
 }
 
 
