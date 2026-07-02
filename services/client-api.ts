@@ -2,12 +2,21 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import {
   AuthResponse,
   CurrentResponse,
+  GetRecommendedBooksParams,
+  IBook,
+  NewBook,
+  RecommendedBooksResponse,
   SignInRequest,
   SignUpRequest,
 } from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
+import { BookStatus } from '@/app/components/status-filter';
 
 const clientApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_APP_URL,
+});
+
+const refreshApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
 });
 
@@ -27,35 +36,73 @@ clientApi.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+// interceptors res:
+let isRefreshing = false;
 
-export const signUp = async (data: SignUpRequest) => {
-  const res = await clientApi.post<AuthResponse>(
+clientApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      if (isRefreshing) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        return clientApi(originalRequest);
+      }
+
+      isRefreshing = true;
+      try {
+        const newTokens = await refreshToken();
+        useAuthStore
+          .getState()
+          .updateTokens(newTokens.token, newTokens.refreshToken);
+
+        originalRequest.headers['Authorization'] =
+          `Bearer ${newTokens.token}`;
+        isRefreshing = false;
+        return clientApi(originalRequest);
+      } catch (e) {
+        useAuthStore.getState().logout();
+        isRefreshing = false;
+        return Promise.reject(e);
+      }
+    }
+    return Promise.reject(error);
+  },
+);
+
+export const signUp = async (user: SignUpRequest) => {
+  const { data } = await clientApi.post<AuthResponse>(
     '/auth/register',
-    data,
+    user,
   );
-  return res.data;
+  return data;
 };
 
-export const signIn = async (data: SignInRequest) => {
-  try {
-    const res = await clientApi.post<AuthResponse>(
-      '/auth/login',
-      data,
-    );
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
+export const signIn = async (user: SignInRequest) => {
+  const { data } = await clientApi.post<AuthResponse>(
+    '/auth/login',
+    user,
+  );
+  return data;
 };
 
 export const current = async () => {
-  try {
-    const { data } =
-      await clientApi.get<CurrentResponse>('/auth/current');
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } =
+    await clientApi.get<CurrentResponse>('/auth/current');
+  return data;
+};
+
+export const refreshToken = async () => {
+  const newToken = useAuthStore.getState().refreshToken;
+  const { data } = await refreshApi.get('/auth/refresh', {
+    headers: {
+      Authorization: `Bearer ${newToken}`,
+    },
+  });
+  return data;
 };
 
 export const getRecommendedBooks = async ({
@@ -63,14 +110,32 @@ export const getRecommendedBooks = async ({
   perPage,
   title,
   author,
-}: {
-  page: number;
-  perPage: number;
-  title?: string;
-  author?: string;
-}) => {
-  const response = await clientApi.get('/books/recommend', {
-    params: { page, limit: perPage, title, author },
+}: GetRecommendedBooksParams): Promise<RecommendedBooksResponse> => {
+  const { data } = await clientApi.get<RecommendedBooksResponse>(
+    '/books/recommend',
+    {
+      params: { page, limit: perPage, title, author },
+    },
+  );
+  return data;
+};
+
+export const addBookFromRecommended = async (
+  id: string,
+): Promise<IBook> => {
+  const { data } = await clientApi.post<IBook>(`/books/add/${id}`);
+  return data;
+};
+
+export const getOwnLibrary = async (status?: BookStatus) => {
+  const { data } = await clientApi.get<IBook[]>('/books/own', {
+    params: { status },
   });
-  return response.data;
+
+  return data;
+};
+
+export const addBook = async (book: NewBook) => {
+  const { data } = await clientApi.post(`/books/add`, book);
+  return data;
 };
