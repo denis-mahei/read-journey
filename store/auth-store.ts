@@ -28,6 +28,9 @@ export const useAuthStore = create<IAuthStore>()(
           isAuthenticated: true,
         });
       },
+      updateTokens: (token: string, refreshToken: string) => {
+        set({ token, refreshToken });
+      },
     }),
     {
       name: 'auth-storage',

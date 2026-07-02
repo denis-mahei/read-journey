@@ -37,9 +37,27 @@ export interface IAuthStore {
   isAuthenticated: boolean;
   logout: () => void;
   authenticate: (authData: AuthResponse) => void;
+  updateTokens: (token: string, refreshToken: string) => void;
 }
 
-export type AuthState = Omit<IAuthStore, 'authenticate' | 'logout'>;
+export interface RecommendedBooksResponse {
+  results: IBook[];
+  totalPages: number;
+  page: number;
+  perPage: number;
+}
+
+export interface GetRecommendedBooksParams {
+  page: number;
+  perPage: number;
+  title?: string;
+  author?: string;
+}
+
+export type AuthState = Omit<
+  IAuthStore,
+  'authenticate' | 'logout' | 'updateTokens'
+>;
 
 export interface IBook {
   _id: string;
@@ -48,4 +66,10 @@ export interface IBook {
   imageUrl: string;
   totalPages: number;
   recommend: boolean;
+}
+
+export interface NewBook {
+  title: string;
+  author: string;
+  totalPages: number;
 }
