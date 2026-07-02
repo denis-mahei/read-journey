@@ -139,3 +139,8 @@ export const addBook = async (book: NewBook) => {
   const { data } = await clientApi.post(`/books/add`, book);
   return data;
 };
+
+export const removeUsersBook = async (id: string) => {
+  const { data } = await clientApi.delete(`/books/remove/${id}`);
+  return data;
+};

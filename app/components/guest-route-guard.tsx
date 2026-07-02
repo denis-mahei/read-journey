@@ -29,8 +29,8 @@ const GuestRouteGuard = ({ children }: GuestRouteGuardProps) => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:justify-center">
-      <div className="flex flex-col gap-y-2.5 p-5 lg:flex-row lg:gap-4 lg:w-full md:p-8 lg:p-8 lg:min-h-184">
+    <div className="min-h-screen flex flex-col md:justify-center items-center">
+      <div className="flex flex-col gap-y-2.5 p-5 lg:flex-row lg:gap-4 lg:w-10/12 md:p-8 lg:p-2">
         {children}
         <ImageBlock />
       </div>

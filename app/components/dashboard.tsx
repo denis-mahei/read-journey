@@ -8,7 +8,7 @@ interface DashboardProps {
 const Dashboard = ({ children }: DashboardProps) => {
   return (
     <MainWrapper>
-      <div className="flex flex-col md:flex-row md:gap-8 lg:flex-col">
+      <div className="flex flex-col md:gap-8 lg:flex-col">
         {children}
       </div>
     </MainWrapper>

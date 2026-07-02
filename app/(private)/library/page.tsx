@@ -4,19 +4,27 @@ import AddBookForm from '@/app/components/add-book-form';
 import RecommendedShortList from '@/app/ui/recommended-short-list';
 import Wrapper from '@/app/ui/wrapper';
 import MyLibraryBooks from '@/app/components/my-library-books';
+import { BookStatus } from '@/app/components/status-filter';
 
-const Page = async () => {
+interface PageProps {
+  searchParams: Promise<{ status: string }>;
+}
+
+const Page = async ({ searchParams }: PageProps) => {
+  const { status } = await searchParams;
   return (
-    <div className="flex flex-col gap-2.5 md:gap-4 lg:flex-row">
-      <Dashboard>
-        <AddBookForm />
-        <Wrapper>
-          <p className="font-bold mb-3.5">Recommended books</p>
-          <RecommendedShortList />
-        </Wrapper>
-      </Dashboard>
-      <MyLibraryBooks />
-    </div>
+    <>
+      <div className="lg:shrink-0">
+        <Dashboard>
+          <AddBookForm />
+          <Wrapper>
+            <p className="font-bold mb-3.5">Recommended books</p>
+            <RecommendedShortList />
+          </Wrapper>
+        </Dashboard>
+      </div>
+      <MyLibraryBooks status={status as BookStatus | undefined} />
+    </>
   );
 };
 

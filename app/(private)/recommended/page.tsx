@@ -18,7 +18,6 @@ const RecommendedPage = async ({
         <FilterForm />
         <TextContent />
       </Dashboard>
-      <div className="h-2.5 lg:h-0" />
       <RecommendedBooks page={Number(page)} />
     </>
   );

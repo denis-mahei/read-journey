@@ -11,7 +11,7 @@ interface MyLibraryBooksProps {
 const MyLibraryBooks = ({ status }: MyLibraryBooksProps) => {
   return (
     <div className="flex flex-1 flex-col p-5 md:p-8 lg:p-5 bg-secondary-bg rounded-4xl">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-3.5">
         <h3 className="font-bold text-[20px]">My library</h3>
         <StatusFilter />
       </div>
