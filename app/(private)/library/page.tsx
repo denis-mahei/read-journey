@@ -1,10 +1,6 @@
 import React from 'react';
-import Dashboard from '@/app/ui/dashboard';
-import AddBookForm from '@/app/components/add-book-form';
-import RecommendedShortList from '@/app/ui/recommended-short-list';
-import Wrapper from '@/app/ui/wrapper';
-import MyLibraryBooks from '@/app/components/my-library-books';
 import { BookStatus } from '@/app/components/status-filter';
+import LibraryContent from '@/app/components/LibraryContent';
 
 interface PageProps {
   searchParams: Promise<{ status: string }>;
@@ -12,20 +8,7 @@ interface PageProps {
 
 const Page = async ({ searchParams }: PageProps) => {
   const { status } = await searchParams;
-  return (
-    <>
-      <div>
-        <Dashboard>
-          <AddBookForm />
-          <Wrapper>
-            <p className="font-bold mb-3.5">Recommended books</p>
-            <RecommendedShortList />
-          </Wrapper>
-        </Dashboard>
-      </div>
-      <MyLibraryBooks status={status as BookStatus | undefined} />
-    </>
-  );
+  return <LibraryContent status={status as BookStatus} />;
 };
 
 export default Page;

@@ -1,22 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import Field from '@/app/ui/field';
 import Button from '@/app/ui/button';
-import { addBook } from '@/services/client-api';
 import SuccessModal from '@/app/ui/success-modal';
-import { toast } from 'sonner';
+import { FormInput } from '@/app/components/LibraryContent';
 
-interface FormInput {
-  title: string;
-  author: string;
-  pages: number;
-}
+type AddBookFormProps = {
+  isSuccess: boolean;
+  onSuccess: (isSuccess: boolean) => void;
+  onAdd: (newBook: FormInput) => Promise<void>;
+};
 
-const AddBookForm = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
+const AddBookForm = ({
+  isSuccess,
+  onSuccess,
+  onAdd,
+}: AddBookFormProps) => {
   const {
     register,
     handleSubmit,
@@ -25,26 +26,6 @@ const AddBookForm = () => {
     mode: 'onBlur',
   });
 
-  const onAdd = async (formInputs: FormInput) => {
-    const { title, author, pages } = formInputs;
-    const normalizedTitle = title.trim();
-    const normalizedAuthor = author.trim();
-    try {
-      const { data } = await addBook({
-        title: normalizedTitle,
-        author: normalizedAuthor,
-        totalPages: Number(pages),
-      });
-      setIsSuccess(true);
-      return data;
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        toast.error(err.response?.data?.error);
-      } else {
-        toast.error('Something went wrong!');
-      }
-    }
-  };
   return (
     <>
       <div className="mb-5 md:mb-0 md:w-80">
@@ -58,7 +39,7 @@ const AddBookForm = () => {
             errors={
               errors.title && (
                 <small className="text-red-600">
-                  {errors.title.message}
+                  {errors.title?.message}
                 </small>
               )
             }
@@ -85,7 +66,7 @@ const AddBookForm = () => {
                 required: true,
                 validate: {
                   minLength: (value) =>
-                    value.length > 3 ||
+                    value.length >= 3 ||
                     'Name of author must' + ' be minimum 3 letters',
                 },
               })}
@@ -128,9 +109,7 @@ const AddBookForm = () => {
           </Button>
         </form>
       </div>
-      {isSuccess && (
-        <SuccessModal onClose={() => setIsSuccess(false)} />
-      )}
+      {isSuccess && <SuccessModal onClose={() => onSuccess(false)} />}
     </>
   );
 };

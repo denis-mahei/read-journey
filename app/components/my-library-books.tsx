@@ -3,12 +3,17 @@ import StatusFilter, {
   BookStatus,
 } from '@/app/components/status-filter';
 import MyLibraryBookList from '@/app/components/my-library-book-list';
+import { IBook } from '@/types/definitions';
 
 interface MyLibraryBooksProps {
-  status?: BookStatus;
+  books: IBook[];
+  handleDelete: (id: string) => void;
 }
 
-const MyLibraryBooks = ({ status }: MyLibraryBooksProps) => {
+const MyLibraryBooks = ({
+  books,
+  handleDelete,
+}: MyLibraryBooksProps) => {
   return (
     <div className="flex flex-1 flex-col p-5 md:p-8 lg:p-5 bg-secondary-bg rounded-4xl">
       <div className="flex justify-between mb-3.5">
@@ -16,7 +21,10 @@ const MyLibraryBooks = ({ status }: MyLibraryBooksProps) => {
         <StatusFilter />
       </div>
       <div className="flex flex-1 w-full">
-        <MyLibraryBookList status={status} />
+        <MyLibraryBookList
+          books={books}
+          handleDelete={handleDelete}
+        />
       </div>
     </div>
   );

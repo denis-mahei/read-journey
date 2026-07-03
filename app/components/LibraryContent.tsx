@@ -1,16 +1,92 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Dashboard from '@/app/ui/dashboard';
+import AddBookForm from '@/app/components/add-book-form';
+import Wrapper from '@/app/ui/wrapper';
+import RecommendedShortList from '@/app/ui/recommended-short-list';
+import MyLibraryBooks from '@/app/components/my-library-books';
+import { BookStatus } from '@/app/components/status-filter';
+import { toast } from 'sonner';
+import axios from 'axios';
+import {
+  addBook,
+  getOwnLibrary,
+  removeUsersBook,
+} from '@/services/client-api';
+import { IBook } from '@/types/definitions';
+import LibraryBookItem from '@/app/components/library-book-item';
 
 interface LibraryContentProps {
-
+  status?: BookStatus;
 }
 
-const LibraryContent = ( {}: LibraryContentProps ) => {
-  return (
-    <div>
+export interface FormInput {
+  title: string;
+  author: string;
+  pages: number;
+}
 
-    </div>
+const LibraryContent = ({ status }: LibraryContentProps) => {
+  const [books, setBooks] = useState<IBook[]>([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const data = await getOwnLibrary(status);
+        setBooks(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchBooks();
+  }, [status]);
+
+  const handleDelete = async (id: string) => {
+    setBooks((prev) => prev.filter((book) => book._id !== id));
+    await removeUsersBook(id);
+    toast.success('Book deleted successfully');
+  };
+
+  const handleAdd = async (formInputs: FormInput) => {
+    const { title, author, pages } = formInputs;
+    const normalizedTitle = title.trim();
+    const normalizedAuthor = author.trim();
+    try {
+      const newBook = await addBook({
+        title: normalizedTitle,
+        author: normalizedAuthor,
+        totalPages: Number(pages),
+      });
+      setBooks((prev) => [...prev, newBook]);
+      setIsSuccess(true);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.error);
+      } else {
+        toast.error('Something went wrong!');
+      }
+    }
+  };
+
+  return (
+    <>
+      <div>
+        <Dashboard>
+          <AddBookForm
+            isSuccess={isSuccess}
+            onSuccess={setIsSuccess}
+            onAdd={handleAdd}
+          />
+          <Wrapper>
+            <p className="font-bold mb-3.5">Recommended books</p>
+            <RecommendedShortList />
+          </Wrapper>
+        </Dashboard>
+      </div>
+      <MyLibraryBooks books={books} handleDelete={handleDelete} />
+    </>
   );
 };
 

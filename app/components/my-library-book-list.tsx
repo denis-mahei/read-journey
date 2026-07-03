@@ -1,48 +1,31 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import {
-  getOwnLibrary,
-  removeUsersBook,
-} from '@/services/client-api';
+import React from 'react';
 import { IBook } from '@/types/definitions';
 import EmptyLib from '@/app/ui/empty-lib';
-import { BookStatus } from '@/app/components/status-filter';
 import LibraryBookItem from '@/app/components/library-book-item';
 
 interface MyLibraryBookListProps {
-  status?: BookStatus;
+  books: IBook[];
+  handleDelete: (id: string) => void;
 }
 
-const MyLibraryBookList = ({ status }: MyLibraryBookListProps) => {
-  const [books, setBooks] = useState<IBook[]>([]);
-
-  useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const data = await getOwnLibrary(status);
-        setBooks(data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchBooks();
-  }, [status]);
-
-  const handleDelete = async (id: string) => {
-    setBooks((prev) => prev.filter((book) => book._id !== id));
-    await removeUsersBook(id);
-  };
+const MyLibraryBookList = ({
+  books,
+  handleDelete,
+}: MyLibraryBookListProps) => {
+  console.log(books);
   return (
     <div className="flex flex-1 w-full">
-      {books.length > 0 ? (
+      {books ? (
         <ul className="flex flex-wrap">
-          {books.map((book) => (
-            <LibraryBookItem
-              key={book._id}
-              book={book}
-              onDelete={handleDelete}
-            />
-          ))}
+          {books.length > 0 &&
+            books.map((book) => (
+              <LibraryBookItem
+                key={book._id}
+                book={book}
+                onDelete={handleDelete}
+              />
+            ))}
         </ul>
       ) : (
         <div className="flex h-full w-full items-center justify-center">
