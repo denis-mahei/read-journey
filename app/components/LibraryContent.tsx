@@ -91,7 +91,7 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
         <BookModal
           book={selectedBook}
           onClose={() => setSelectedBook(null)}
-          onAction={() => router.push('/reading')}
+          onAction={() => router.push(`/reading/${selectedBook._id}`)}
         />
       )}
     </>

@@ -144,3 +144,8 @@ export const removeUsersBook = async (id: string) => {
   const { data } = await clientApi.delete(`/books/remove/${id}`);
   return data;
 };
+
+export const getBookById = async (id: string) => {
+  const { data } = await clientApi.get(`/books/${id}`);
+  return data;
+};

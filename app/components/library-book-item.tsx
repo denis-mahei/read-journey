@@ -8,7 +8,7 @@ import Icon from '@/app/ui/icon';
 interface LibraryBookItemProps {
   book: IBook;
   onDelete: (id: string) => void;
-  selectedBook: (book: IBook) => void;
+  selectedBook?: (book: IBook) => void;
 }
 
 const LibraryBookItem = ({
@@ -24,7 +24,7 @@ const LibraryBookItem = ({
         width={137}
         height={208}
         className="md:hidden rounded-lg"
-        onClick={() => selectedBook(book)}
+        onClick={() => selectedBook?.(book)}
       />
       <Image
         src={
