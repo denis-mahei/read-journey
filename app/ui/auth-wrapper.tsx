@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '@/app/components/logo';
+import Logo from '@/app/ui/logo';
 import Heading from '@/app/components/heading';
 
 interface AuthWrapperProps {

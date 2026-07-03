@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 
 interface ModalWrapperProps {
   onClose: () => void;

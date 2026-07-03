@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import { IBook } from '@/types/definitions';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 
 interface LibraryBookItemProps {
   book: IBook;

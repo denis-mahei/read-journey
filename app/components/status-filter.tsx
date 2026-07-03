@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 import clsx from 'clsx';
 
 const STATUS_OPTIONS = [
@@ -86,8 +86,9 @@ const StatusFilter = () => {
                 type="button"
                 onClick={() => handleSelect(option.value)}
                 className={clsx(
-                  'text-gray-text text-xs w-full text-left rounded-lg' +
-                    ' hover:bg-white/10',
+                  'text-gray-text text-xs w-full text-left rounded-lg p-1.5' +
+                    ' md:p-2' +
+                    ' lg:hover:bg-white/10',
                   option === selected && 'text-primary',
                 )}
               >

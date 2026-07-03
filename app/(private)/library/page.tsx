@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '@/app/components/dashboard';
+import Dashboard from '@/app/ui/dashboard';
 import AddBookForm from '@/app/components/add-book-form';
 import RecommendedShortList from '@/app/ui/recommended-short-list';
 import Wrapper from '@/app/ui/wrapper';
@@ -14,7 +14,7 @@ const Page = async ({ searchParams }: PageProps) => {
   const { status } = await searchParams;
   return (
     <>
-      <div className="lg:shrink-0">
+      <div>
         <Dashboard>
           <AddBookForm />
           <Wrapper>

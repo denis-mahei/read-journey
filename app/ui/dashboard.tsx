@@ -1,5 +1,6 @@
 import React from 'react';
 import MainWrapper from '@/app/ui/main-wrapper';
+import BlockQuote from '@/app/ui/block-quote';
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -8,8 +9,9 @@ interface DashboardProps {
 const Dashboard = ({ children }: DashboardProps) => {
   return (
     <MainWrapper>
-      <div className="flex flex-col md:gap-8 lg:flex-col">
+      <div className="flex flex-col md:flex-row md:gap-5 lg:flex-col">
         {children}
+        <BlockQuote />
       </div>
     </MainWrapper>
   );

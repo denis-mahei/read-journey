@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 import MobileMenu from '@/app/components/mobile-menu';
 import NavLink from '@/app/components/nav-link';
-import UserBar from '@/app/components/user-bar';
+import UserBar from '@/app/ui/user-bar';
 
 interface UserNavProps {}
 

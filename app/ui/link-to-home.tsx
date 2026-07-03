@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 import Link from 'next/link';
 
 interface LinkToHomeProps {

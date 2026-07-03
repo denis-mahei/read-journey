@@ -8,8 +8,6 @@ import { IBook } from '@/types/definitions';
 import EmptyLib from '@/app/ui/empty-lib';
 import { BookStatus } from '@/app/components/status-filter';
 import LibraryBookItem from '@/app/components/library-book-item';
-import { toast } from 'sonner';
-import book from '@/app/components/book';
 
 interface MyLibraryBookListProps {
   status?: BookStatus;
@@ -31,7 +29,7 @@ const MyLibraryBookList = ({ status }: MyLibraryBookListProps) => {
   }, [status]);
 
   const handleDelete = async (id: string) => {
-    setBooks((prev) => prev.filter((i) => i._id !== id));
+    setBooks((prev) => prev.filter((book) => book._id !== id));
     await removeUsersBook(id);
   };
   return (

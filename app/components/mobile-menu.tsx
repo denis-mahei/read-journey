@@ -2,7 +2,7 @@
 
 import React from 'react';
 import NavLink from '@/app/components/nav-link';
-import Icon from '@/app/components/icon';
+import Icon from '@/app/ui/icon';
 import Logout from '@/app/(auth)/logout/logout';
 
 interface MobileMenuProps {

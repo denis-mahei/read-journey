@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from '@/app/components/logo';
+import Logo from '@/app/ui/logo';
 import UserNav from '@/app/components/user-nav';
 import Logout from '@/app/(auth)/logout/logout';
-import UserBar from '@/app/components/user-bar';
+import UserBar from '@/app/ui/user-bar';
 
 const Header = () => {
   return (

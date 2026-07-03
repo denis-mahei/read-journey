@@ -32,7 +32,9 @@ const FilterForm = () => {
 
   return (
     <div className="mb-5 lg:w-full">
-      <h4 className="text-[10px] capitalize ml-3.5 mb-2">filters:</h4>
+      <h4 className="text-[10px] capitalize ml-3.5 mb-2 md:text-sm">
+        filters:
+      </h4>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Field label={'Book title:'} htmlFor={'title'}>
           <input
