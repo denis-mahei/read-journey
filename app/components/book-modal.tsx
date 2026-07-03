@@ -7,10 +7,16 @@ import ModalWrapper from '@/app/ui/modal-wrapper';
 interface BookModalProps {
   book: IBook;
   onClose: () => void;
-  onAdd: (id: string) => void;
+  onAction?: (id: string) => void;
+  buttonTitle?: string;
 }
 
-const BookModal = ({ book, onClose, onAdd }: BookModalProps) => {
+const BookModal = ({
+  book,
+  onClose,
+  onAction,
+  buttonTitle = 'Add to library',
+}: BookModalProps) => {
   return (
     <ModalWrapper onClose={onClose}>
       <div className="flex flex-col justify-center items-center">
@@ -29,9 +35,9 @@ const BookModal = ({ book, onClose, onAdd }: BookModalProps) => {
         <Button
           variant="secondary"
           type="button"
-          onClick={() => onAdd(book._id)}
+          onClick={() => onAction?.(book._id)}
         >
-          Add to library
+          {buttonTitle}
         </Button>
       </div>
     </ModalWrapper>

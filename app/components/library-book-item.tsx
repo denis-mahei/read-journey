@@ -2,31 +2,29 @@
 
 import React from 'react';
 import Image from 'next/image';
-
 import { IBook } from '@/types/definitions';
 import Icon from '@/app/ui/icon';
 
 interface LibraryBookItemProps {
   book: IBook;
   onDelete: (id: string) => void;
+  selectedBook: (book: IBook) => void;
 }
 
 const LibraryBookItem = ({
   book,
   onDelete,
+  selectedBook,
 }: LibraryBookItemProps) => {
   return (
     <li>
       <Image
-        src={
-          book.imageUrl
-            ? book.imageUrl
-            : '/images/placeholder-mobile.png'
-        }
+        src={book.imageUrl}
         alt={book.title}
         width={137}
         height={208}
         className="md:hidden rounded-lg"
+        onClick={() => selectedBook(book)}
       />
       <Image
         src={

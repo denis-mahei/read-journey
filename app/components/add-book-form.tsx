@@ -6,6 +6,8 @@ import Field from '@/app/ui/field';
 import Button from '@/app/ui/button';
 import SuccessModal from '@/app/ui/success-modal';
 import { FormInput } from '@/app/components/LibraryContent';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 type AddBookFormProps = {
   isSuccess: boolean;
@@ -21,10 +23,24 @@ const AddBookForm = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormInput>({
     mode: 'onBlur',
   });
+
+  const onSubmit = async (newBook: FormInput) => {
+    try {
+      await onAdd(newBook);
+      reset();
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.error);
+      } else {
+        toast.error('Something went wrong!');
+      }
+    }
+  };
 
   return (
     <>
@@ -32,7 +48,7 @@ const AddBookForm = ({
         <h4 className="text-[10px] capitalize ml-3.5 mb-2 md:text-sm">
           Create your library:
         </h4>
-        <form onSubmit={handleSubmit(onAdd)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Field
             label={'Book title:'}
             htmlFor={'title'}
@@ -104,7 +120,11 @@ const AddBookForm = ({
           </Field>
 
           <div className="h-5" />
-          <Button variant="secondary" type="submit">
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={() => reset({ ...onAdd })}
+          >
             Add book
           </Button>
         </form>

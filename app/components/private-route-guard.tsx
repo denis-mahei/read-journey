@@ -27,7 +27,11 @@ const PrivateRouteGuard = ({ children }: PrivateRouteGuardProps) => {
     return null;
   }
 
-  return <div className="p-5 md:p-8">{children}</div>;
+  return (
+    <div className="flex flex-col p-5 gap-2.5 md:gap-4 md:p-8">
+      {children}
+    </div>
+  );
 };
 
 export default PrivateRouteGuard;

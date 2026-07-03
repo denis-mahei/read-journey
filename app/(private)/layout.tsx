@@ -12,7 +12,6 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
   return (
     <PrivateRouteGuard>
       <Header />
-      <div className="h-2.5 lg:h-4" />
       <main className="flex flex-col gap-2.5 md:gap-4 lg:flex-row">
         {children}
         <Toaster

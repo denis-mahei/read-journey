@@ -8,14 +8,14 @@ import RecommendedShortList from '@/app/ui/recommended-short-list';
 import MyLibraryBooks from '@/app/components/my-library-books';
 import { BookStatus } from '@/app/components/status-filter';
 import { toast } from 'sonner';
-import axios from 'axios';
 import {
   addBook,
   getOwnLibrary,
   removeUsersBook,
 } from '@/services/client-api';
 import { IBook } from '@/types/definitions';
-import LibraryBookItem from '@/app/components/library-book-item';
+import BookModal from '@/app/components/book-modal';
+import { useRouter } from 'next/navigation';
 
 interface LibraryContentProps {
   status?: BookStatus;
@@ -28,8 +28,12 @@ export interface FormInput {
 }
 
 const LibraryContent = ({ status }: LibraryContentProps) => {
+  const router = useRouter();
   const [books, setBooks] = useState<IBook[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<IBook | null>(
+    null,
+  );
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -53,21 +57,14 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
     const { title, author, pages } = formInputs;
     const normalizedTitle = title.trim();
     const normalizedAuthor = author.trim();
-    try {
-      const newBook = await addBook({
-        title: normalizedTitle,
-        author: normalizedAuthor,
-        totalPages: Number(pages),
-      });
-      setBooks((prev) => [...prev, newBook]);
-      setIsSuccess(true);
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        toast.error(err.response?.data?.error);
-      } else {
-        toast.error('Something went wrong!');
-      }
-    }
+
+    const newBook = await addBook({
+      title: normalizedTitle,
+      author: normalizedAuthor,
+      totalPages: Number(pages),
+    });
+    setBooks((prev) => [...prev, newBook]);
+    setIsSuccess(true);
   };
 
   return (
@@ -85,7 +82,18 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
           </Wrapper>
         </Dashboard>
       </div>
-      <MyLibraryBooks books={books} handleDelete={handleDelete} />
+      <MyLibraryBooks
+        books={books}
+        handleDelete={handleDelete}
+        onSelectBook={setSelectedBook}
+      />
+      {selectedBook && (
+        <BookModal
+          book={selectedBook}
+          onClose={() => setSelectedBook(null)}
+          onAction={() => router.push('/reading')}
+        />
+      )}
     </>
   );
 };

@@ -7,7 +7,7 @@ interface PageProps {}
 const Page = ({}: PageProps) => {
   const user = useAuthStore((state) => state.user);
 
-  return <div>{user?.name}</div>;
+  return <div>Reading</div>;
 };
 
 export default Page;

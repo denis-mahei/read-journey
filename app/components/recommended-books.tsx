@@ -111,7 +111,7 @@ const RecommendedBooks = ({ page }: RecommendedBooksProps) => {
       />
       {selectedBook && (
         <BookModal
-          onAdd={handleAddBook}
+          onAction={handleAddBook}
           book={selectedBook}
           onClose={() => setSelectedBook(null)}
         />
