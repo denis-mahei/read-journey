@@ -76,7 +76,7 @@ export interface NewBook {
   totalPages: number;
 }
 
-export type StartReadingParams = {
+export type ReadingParams = {
   id: string;
   page: number;
 };

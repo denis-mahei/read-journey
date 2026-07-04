@@ -6,14 +6,13 @@ import {
   GetRecommendedBooksParams,
   IBook,
   NewBook,
+  ReadingParams,
   RecommendedBooksResponse,
   SignInRequest,
   SignUpRequest,
-  StartReadingParams,
 } from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
 import { BookStatus } from '@/app/components/status-filter';
-import page from '@/app/(auth)/signin/page';
 
 const clientApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
@@ -153,10 +152,7 @@ export const getBookById = async (id: string) => {
   return data;
 };
 
-export const startReading = async ({
-  id,
-  page,
-}: StartReadingParams) => {
+export const startReading = async ({ id, page }: ReadingParams) => {
   const { data } = await clientApi.post<BookDetails>(
     '/books/reading/start',
     {
@@ -164,5 +160,32 @@ export const startReading = async ({
       page,
     },
   );
+  return data;
+};
+
+export const finishReading = async ({ id, page }: ReadingParams) => {
+  const { data } = await clientApi.post<BookDetails>(
+    `/books/reading/finish`,
+    {
+      id,
+      page,
+    },
+  );
+  return data;
+};
+
+export const deleteFromReading = async ({
+  bookId,
+  readingId,
+}: {
+  bookId: string;
+  readingId: string;
+}) => {
+  const { data } = await clientApi.delete('/books/reading', {
+    params: {
+      bookId,
+      readingId,
+    },
+  });
   return data;
 };
