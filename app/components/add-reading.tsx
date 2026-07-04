@@ -41,7 +41,6 @@ const AddReading = ({
       } else {
         toast.error('Something went wrong!');
       }
-      throw err;
     }
   };
 
