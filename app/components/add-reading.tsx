@@ -8,7 +8,8 @@ import axios from 'axios';
 import { toast } from 'sonner';
 
 interface AddReadingProps {
-  onReading: (data: AddReadingInput) => Promise<void>;
+  onStartReading: (data: AddReadingInput) => Promise<void>;
+  onFinishReading: (data: AddReadingInput) => Promise<void>;
   isReading: boolean;
 }
 
@@ -16,14 +17,23 @@ export interface AddReadingInput {
   page: number;
 }
 
-const AddReading = ({ isReading, onReading }: AddReadingProps) => {
+const AddReading = ({
+  isReading,
+  onStartReading,
+  onFinishReading,
+}: AddReadingProps) => {
   const { register, handleSubmit, reset } =
     useForm<AddReadingInput>();
 
   const onSubmit = async ({ page }: AddReadingInput) => {
     try {
-      await onReading({ page });
-      toast.success('Reading added successfully.');
+      if (!isReading) {
+        await onStartReading({ page });
+        toast.success('Reading started!.');
+      } else {
+        await onFinishReading({ page });
+        toast.success('Reading finished.');
+      }
       reset();
     } catch (err) {
       if (axios.isAxiosError(err)) {

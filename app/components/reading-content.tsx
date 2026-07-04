@@ -1,12 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { getBookById, startReading } from '@/services/client-api';
+import {
+  finishReading,
+  getBookById,
+  startReading,
+} from '@/services/client-api';
 import LibraryBookItem from '@/app/components/library-book-item';
 import Dashboard from '@/app/ui/dashboard';
 import AddReading, {
   AddReadingInput,
 } from '@/app/components/add-reading';
-import { toast } from 'sonner';
 import { BookDetails } from '@/types/definitions';
 import Icon from '@/app/ui/icon';
 
@@ -31,6 +34,12 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     setBook(startPage);
   };
 
+  const handleFinishReading = async (formInput: AddReadingInput) => {
+    const { page } = formInput;
+    const finishPage = await finishReading({ id, page });
+    setBook(finishPage);
+  };
+
   const isReading =
     (book?.progress?.length ?? 0) > 0 &&
     book?.progress[book?.progress.length - 1].status === 'active';
@@ -39,7 +48,8 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     <div>
       <Dashboard>
         <AddReading
-          onReading={handleStartReading}
+          onStartReading={handleStartReading}
+          onFinishReading={handleFinishReading}
           isReading={isReading}
         />
       </Dashboard>
