@@ -32,15 +32,14 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
   };
 
   const isReading =
-    book?.progress.length > 0 &&
+    (book?.progress?.length ?? 0) > 0 &&
     book?.progress[book?.progress.length - 1].status === 'active';
 
   return (
     <div>
       <Dashboard>
         <AddReading
-          toReading={handleStartReading}
-          id={id}
+          onReading={handleStartReading}
           isReading={isReading}
         />
       </Dashboard>
