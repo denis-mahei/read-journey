@@ -1,6 +1,6 @@
 import React from 'react';
 import { BookStatus } from '@/app/components/status-filter';
-import LibraryContent from '@/app/components/LibraryContent';
+import LibraryContent from '@/app/components/library-content';
 
 interface PageProps {
   searchParams: Promise<{ status: string }>;

@@ -21,7 +21,11 @@ const BookModal = ({
     <ModalWrapper onClose={onClose}>
       <div className="flex flex-col justify-center items-center">
         <Image
-          src={book.imageUrl}
+          src={
+            book.imageUrl
+              ? book.imageUrl
+              : '/images/placeholder-desktop.png'
+          }
           alt={book.title}
           width={140}
           height={213}

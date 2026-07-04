@@ -1,5 +1,4 @@
 import React from 'react';
-import { getBookById } from '@/services/client-api';
 import ReadingContent from '@/app/components/reading-content';
 
 interface PageProps {

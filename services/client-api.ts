@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import {
   AuthResponse,
+  BookDetails,
   CurrentResponse,
   GetRecommendedBooksParams,
   IBook,
@@ -8,9 +9,11 @@ import {
   RecommendedBooksResponse,
   SignInRequest,
   SignUpRequest,
+  StartReadingParams,
 } from '@/types/definitions';
 import { useAuthStore } from '@/store/auth-store';
 import { BookStatus } from '@/app/components/status-filter';
+import page from '@/app/(auth)/signin/page';
 
 const clientApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_APP_URL,
@@ -146,6 +149,20 @@ export const removeUsersBook = async (id: string) => {
 };
 
 export const getBookById = async (id: string) => {
-  const { data } = await clientApi.get(`/books/${id}`);
+  const { data } = await clientApi.get<BookDetails>(`/books/${id}`);
+  return data;
+};
+
+export const startReading = async ({
+  id,
+  page,
+}: StartReadingParams) => {
+  const { data } = await clientApi.post<BookDetails>(
+    '/books/reading/start',
+    {
+      id,
+      page,
+    },
+  );
   return data;
 };

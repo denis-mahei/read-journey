@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Field from '@/app/ui/field';
 import Button from '@/app/ui/button';
 import SuccessModal from '@/app/ui/success-modal';
-import { FormInput } from '@/app/components/LibraryContent';
+import { FormInput } from '@/app/components/library-content';
 import axios from 'axios';
 import { toast } from 'sonner';
 

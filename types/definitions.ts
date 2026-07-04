@@ -1,3 +1,5 @@
+import { BookStatus } from '@/app/components/status-filter';
+
 export interface SignInRequest {
   email: string;
   password: string;
@@ -72,4 +74,36 @@ export interface NewBook {
   title: string;
   author: string;
   totalPages: number;
+}
+
+export type StartReadingParams = {
+  id: string;
+  page: number;
+};
+
+interface Progress {
+  startPage: number;
+  startReading: string;
+  finishPage?: number;
+  finishReading?: string;
+  speed?: number;
+  status: 'active' | 'inactive';
+}
+
+type TimeLeft = {
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+export interface BookDetails {
+  _id: string;
+  title: string;
+  author: string;
+  imageUrl: string;
+  totalPages: number;
+  status: BookStatus;
+  owner: string;
+  progress: Progress[];
+  timeLeftToRead?: TimeLeft;
 }
