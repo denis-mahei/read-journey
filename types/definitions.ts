@@ -81,13 +81,14 @@ export type ReadingParams = {
   page: number;
 };
 
-interface Progress {
+export interface Progress {
   startPage: number;
   startReading: string;
-  finishPage?: number;
-  finishReading?: string;
+  finishPage: number;
+  finishReading: string;
   speed?: number;
   status: 'active' | 'inactive';
+  _id: string;
 }
 
 type TimeLeft = {
