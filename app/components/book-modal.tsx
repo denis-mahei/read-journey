@@ -31,7 +31,7 @@ const BookModal = ({
           height={213}
           className="object-cover rounded-lg mb-4"
         />
-        <h3 className=" text-center text-[18px] font-bold mb-0.5">
+        <h3 className=" text-center text-md font-bold mb-0.5">
           {book.title}
         </h3>
         <p className="mb-1 text-xs text-gray-text">{book.author}</p>

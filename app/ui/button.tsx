@@ -11,7 +11,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    'rounded-4xl px-7 py-3 font-bold text-md min-w-32.75 transition';
+    'rounded-4xl px-7 py-3 font-bold text-sm min-w-32.75 transition';
 
   const variantClasses = {
     primary: 'bg-primary text-secondary-bg',

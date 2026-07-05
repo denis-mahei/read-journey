@@ -13,7 +13,7 @@ const Logo = ({
   return (
     <div className={className}>
       <Icon name="logo" width={42} height={17} viewBox="0 0 42 17" />
-      <span className="hidden md:flex md:text-[18px] uppercase font-bold leading-none translate-y-px">
+      <span className="hidden md:flex md:text-md uppercase font-bold leading-none translate-y-px">
         {title}
       </span>
     </div>

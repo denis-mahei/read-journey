@@ -5,12 +5,10 @@ import Wrapper from '@/app/ui/wrapper';
 const TextContent = () => {
   return (
     <Wrapper>
-      <h2 className="text-[18px] font-bold mb-5">
-        Start your workout
-      </h2>
+      <h2 className="text-md font-bold mb-5">Start your workout</h2>
       <ul>
         <li className="flex gap-3 mb-5">
-          <h4 className="flex justify-center items-center text-[18px] font-bold rounded-full w-10 h-10 bg-primary p-4 text-secondary-bg">
+          <h4 className="flex justify-center items-center text-md font-bold rounded-full w-10 h-10 bg-primary p-4 text-secondary-bg">
             1
           </h4>
           <p className="text-sm">
@@ -21,7 +19,7 @@ const TextContent = () => {
           </p>
         </li>
         <li className="flex gap-3 mb-5">
-          <h4 className="flex justify-center items-center text-[18px] font-bold rounded-full w-10 h-10 bg-primary p-4 text-secondary-bg">
+          <h4 className="flex justify-center items-center text-md font-bold rounded-full w-10 h-10 bg-primary p-4 text-secondary-bg">
             2
           </h4>
           <p className="text-sm">

@@ -12,6 +12,7 @@ import AddReading, {
 } from '@/app/components/add-reading';
 import { BookDetails } from '@/types/definitions';
 import Icon from '@/app/ui/icon';
+import ProgressStaticText from '@/app/ui/progress-static-text';
 
 interface ReadingContentProps {
   id: string;
@@ -39,19 +40,25 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     const finishPage = await finishReading({ id, page });
     setBook(finishPage);
   };
-
   const isReading =
     (book?.progress?.length ?? 0) > 0 &&
-    book?.progress[book?.progress.length - 1].status === 'active';
-
+    book!.progress?.at(-1)?.status === 'active';
+  console.log(book?.progress);
   return (
     <div>
       <Dashboard>
-        <AddReading
-          onStartReading={handleStartReading}
-          onFinishReading={handleFinishReading}
-          isReading={isReading}
-        />
+        <div className="flex flex-col gap-10 md:flex-row">
+          <AddReading
+            onStartReading={handleStartReading}
+            onFinishReading={handleFinishReading}
+            isReading={isReading}
+          />
+          {(book?.progress?.length ?? 0) < 0 ? (
+            'Diary'
+          ) : (
+            <ProgressStaticText />
+          )}
+        </div>
       </Dashboard>
       {book && (
         <>
