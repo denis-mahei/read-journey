@@ -62,6 +62,10 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     }
   };
 
+  const filteredProgress = book?.progress.filter(
+    (p) => p.status === 'inactive',
+  );
+
   return (
     <>
       <Dashboard>
@@ -117,12 +121,12 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
               {activeView === 'statistics' ? (
                 <Statistics
                   totalPages={book?.totalPages}
-                  progress={book?.progress}
+                  progress={filteredProgress}
                 />
               ) : (
                 book && (
                   <Diary
-                    progress={book.progress as Progress[]}
+                    progress={filteredProgress as Progress[]}
                     totalPages={book.totalPages}
                     onDelete={handleDelete}
                   />

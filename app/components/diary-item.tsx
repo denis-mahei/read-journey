@@ -8,6 +8,7 @@ import Icon from '@/app/ui/icon';
 interface DiaryItemProps {
   details: Progress;
   totalPages: number;
+  onDelete: (id: string) => void;
 }
 
 const DiaryItem = ({

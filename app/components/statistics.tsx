@@ -10,7 +10,8 @@ interface StatisticsProps {
 const Statistics = ({ totalPages, progress }: StatisticsProps) => {
   const mapped = progress.map((item) => item.finishPage);
   const finish = Math.max(...mapped);
-  const percentage = ((finish / totalPages) * 100).toFixed(2);
+  const percentage = (finish / totalPages) * 100;
+  const progressBar = (283 * percentage) / 100;
   return (
     <Wrapper>
       <div>
@@ -32,11 +33,11 @@ const Statistics = ({ totalPages, progress }: StatisticsProps) => {
             strokeLinecap="round"
             stroke="#30B94D"
             strokeWidth="8"
-            strokeDasharray={`${percentage} 283`}
+            strokeDasharray={`${progressBar} 283`}
             transform="rotate(-90 58 58)"
           />
         </svg>
-        <p>{percentage}%</p>
+        <p>{percentage.toFixed(2)}%</p>
         <p>{finish} pages read</p>
       </div>
     </Wrapper>
