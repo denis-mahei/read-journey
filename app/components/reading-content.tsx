@@ -18,6 +18,7 @@ import Diary from '@/app/components/diary';
 import Statistics from '@/app/components/statistics';
 import clsx from 'clsx';
 import { toast } from 'sonner';
+import IsReadModal from '@/app/ui/is-read-modal';
 
 interface ReadingContentProps {
   id: string;
@@ -28,6 +29,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
   const [activeView, setActiveView] = useState<
     'diary' | 'statistics'
   >('diary');
+  const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -42,11 +44,11 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     const startPage = await startReading({ id, page });
     setBook(startPage);
   };
-
   const handleFinishReading = async (formInput: AddReadingInput) => {
     const { page } = formInput;
     const finishPage = await finishReading({ id, page });
     setBook(finishPage);
+    if (finishPage.status === 'done') setIsRead(true);
   };
   const isReading =
     (book?.progress?.length ?? 0) > 0 &&
@@ -58,7 +60,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
       setBook(data);
       toast.success('Reading deleted successfully.');
     } catch (e) {
-      toast.error(e?.response?.data?.error);
+      toast.error(e.response?.data?.error);
     }
   };
 
@@ -120,7 +122,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
               </div>
               {activeView === 'statistics' ? (
                 <Statistics
-                  totalPages={book?.totalPages}
+                  totalPages={book.totalPages}
                   progress={filteredProgress}
                 />
               ) : (
@@ -158,6 +160,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
           )}
         </>
       )}
+      {isRead && <IsReadModal onClose={() => setIsRead(false)} />}
     </>
   );
 };

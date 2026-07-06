@@ -9,7 +9,7 @@ interface StatisticsProps {
 
 const Statistics = ({ totalPages, progress }: StatisticsProps) => {
   const mapped = progress.map((item) => item.finishPage);
-  const finish = Math.max(...mapped);
+  const finish = mapped.length > 0 ? Math.max(...mapped) : 0;
   const percentage = (finish / totalPages) * 100;
   const progressBar = (283 * percentage) / 100;
   return (

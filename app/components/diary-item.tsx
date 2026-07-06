@@ -23,7 +23,7 @@ const DiaryItem = ({
   const finish = new Date(details.finishReading).getTime();
   const start = new Date(details.startReading).getTime();
   const during = Math.round((finish - start) / 60000);
-  const pagesRead = details.finishPage - details.startPage;
+  const pagesRead = details.finishPage - details.startPage + 1;
   const percentage = ((pagesRead / totalPages) * 100).toFixed(2);
 
   const handleDelete = () => {
