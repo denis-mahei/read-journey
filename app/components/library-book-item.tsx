@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { BookDetails, IBook } from '@/types/definitions';
+import { BookDetails } from '@/types/definitions';
 import Icon from '@/app/ui/icon';
 
 interface LibraryBookItemProps {

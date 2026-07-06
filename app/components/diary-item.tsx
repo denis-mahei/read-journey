@@ -9,12 +9,14 @@ interface DiaryItemProps {
   details: Progress;
   totalPages: number;
   onDelete: (id: string) => void;
+  status: string;
 }
 
 const DiaryItem = ({
   details,
   totalPages,
   onDelete,
+  status,
 }: DiaryItemProps) => {
   const formatedDate = format(
     new Date(details.startReading),
@@ -36,14 +38,16 @@ const DiaryItem = ({
       <p className="text-gray-text">{during} minutes</p>
       <p>{pagesRead}</p>
       <p>{percentage}%</p>
-      <button onClick={handleDelete}>
-        <Icon
-          name="trash"
-          viewBox="0 0 24 24"
-          width={24}
-          height={24}
-        />
-      </button>
+      {status === 'in-progress' && (
+        <button onClick={handleDelete}>
+          <Icon
+            name="trash"
+            viewBox="0 0 24 24"
+            width={24}
+            height={24}
+          />
+        </button>
+      )}
     </li>
   );
 };

@@ -19,6 +19,7 @@ import Statistics from '@/app/components/statistics';
 import clsx from 'clsx';
 import { toast } from 'sonner';
 import IsReadModal from '@/app/ui/is-read-modal';
+import axios from 'axios';
 
 interface ReadingContentProps {
   id: string;
@@ -50,23 +51,27 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
     setBook(finishPage);
     if (finishPage.status === 'done') setIsRead(true);
   };
-  const isReading =
-    (book?.progress?.length ?? 0) > 0 &&
-    book!.progress?.at(-1)?.status === 'active';
 
   const handleDelete = async (readingId: string) => {
     try {
       const data = await deleteFromReading({ bookId: id, readingId });
       setBook(data);
       toast.success('Reading deleted successfully.');
-    } catch (e) {
-      toast.error(e.response?.data?.error);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.error);
+      } else {
+        toast.error('Error deleting reading');
+      }
     }
   };
 
-  const filteredProgress = book?.progress.filter(
-    (p) => p.status === 'inactive',
-  );
+  const isReading =
+    book !== null && book.progress.at(-1)?.status === 'active';
+
+  const filteredProgress = book?.progress
+    ? book.progress.filter((p) => p.status === 'inactive')
+    : [];
 
   return (
     <>
@@ -77,7 +82,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
             onFinishReading={handleFinishReading}
             isReading={isReading}
           />
-          {(book?.progress?.length ?? 0) !== 0 ? (
+          {book !== null ? (
             <div>
               <div className="flex justify-between items-center mb-5">
                 <h3 className="font-bold text-md">
@@ -126,13 +131,12 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
                   progress={filteredProgress}
                 />
               ) : (
-                book && (
-                  <Diary
-                    progress={filteredProgress as Progress[]}
-                    totalPages={book.totalPages}
-                    onDelete={handleDelete}
-                  />
-                )
+                <Diary
+                  status={book.status}
+                  progress={filteredProgress as Progress[]}
+                  totalPages={book.totalPages}
+                  onDelete={handleDelete}
+                />
               )}
             </div>
           ) : (

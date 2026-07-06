@@ -6,16 +6,23 @@ import DiaryItem from '@/app/components/diary-item';
 interface DiaryProps {
   progress: Progress[];
   totalPages: number;
-  onDelete: () => void;
+  onDelete: (readingId: string) => Promise<void>;
+  status: string;
 }
 
-const Diary = ({ onDelete, totalPages, progress }: DiaryProps) => {
+const Diary = ({
+  status,
+  onDelete,
+  totalPages,
+  progress,
+}: DiaryProps) => {
   return (
     <Wrapper>
       <ul>
         {progress.map((item) => (
           <DiaryItem
             onDelete={onDelete}
+            status={status}
             key={item._id}
             details={item}
             totalPages={totalPages}
