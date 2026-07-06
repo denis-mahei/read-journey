@@ -2,13 +2,13 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { BookDetails } from '@/types/definitions';
+import { BookItem } from '@/types/definitions';
 import Icon from '@/app/ui/icon';
 
 interface LibraryBookItemProps {
-  book: BookDetails;
+  book: BookItem;
   onDelete?: (id: string) => void;
-  selectedBook?: (book: BookDetails) => void;
+  selectedBook?: (book: BookItem) => void;
 }
 
 const LibraryBookItem = ({

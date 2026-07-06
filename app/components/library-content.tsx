@@ -16,6 +16,7 @@ import {
 import { IBook } from '@/types/definitions';
 import BookModal from '@/app/components/book-modal';
 import { useRouter } from 'next/navigation';
+import BlockQuote from '@/app/ui/block-quote';
 
 interface LibraryContentProps {
   status?: BookStatus;
@@ -80,6 +81,7 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
             <p className="font-bold mb-3.5">Recommended books</p>
             <RecommendedShortList />
           </Wrapper>
+          <BlockQuote />
         </Dashboard>
       </div>
       <MyLibraryBooks

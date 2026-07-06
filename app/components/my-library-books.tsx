@@ -1,14 +1,15 @@
 'use client';
+
 import React from 'react';
 import StatusFilter from '@/app/components/status-filter';
-import { IBook } from '@/types/definitions';
+import { BookItem, IBook } from '@/types/definitions';
 import EmptyLib from '@/app/ui/empty-lib';
 import LibraryBookItem from '@/app/components/library-book-item';
 
 interface MyLibraryBooksProps {
   books: IBook[];
   handleDelete: (id: string) => void;
-  onSelectBook: (book: IBook) => void;
+  onSelectBook: (book: BookItem) => void;
 }
 
 const MyLibraryBooks = ({
