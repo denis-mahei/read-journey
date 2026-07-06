@@ -82,7 +82,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
             onFinishReading={handleFinishReading}
             isReading={isReading}
           />
-          {book !== null ? (
+          {book !== null && filteredProgress.length > 0 ? (
             <div>
               <div className="flex justify-between items-center mb-5">
                 <h3 className="font-bold text-md">
