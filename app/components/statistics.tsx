@@ -14,7 +14,7 @@ const Statistics = ({ totalPages, progress }: StatisticsProps) => {
   const progressBar = (283 * percentage) / 100;
   return (
     <Wrapper>
-      <div>
+      <div className="flex gap-5 flex-col items-center justify-center">
         <svg width="116" height="116" viewBox="0 0 116 116">
           <circle
             cx="58"
@@ -24,7 +24,6 @@ const Statistics = ({ totalPages, progress }: StatisticsProps) => {
             stroke="#1f1f1f"
             strokeWidth="8"
           />
-
           <circle
             cx="58"
             cy="58"
@@ -36,9 +35,22 @@ const Statistics = ({ totalPages, progress }: StatisticsProps) => {
             strokeDasharray={`${progressBar} 283`}
             transform="rotate(-90 58 58)"
           />
+          <text
+            x="60"
+            y="64"
+            textAnchor="middle"
+            fill="currentColor"
+            className="font-bold text-md"
+          >
+            {percentage.toFixed(2)}%
+          </text>
         </svg>
-        <p>{percentage.toFixed(2)}%</p>
-        <p>{finish} pages read</p>
+        <div className="flex gap-2">
+          <div className="rounded-sm w-3.5 h-3.5 bg-[#30b94d]" />
+          <p className="text-sm font-bold -translate-y-px">
+            {finish} pages read
+          </p>
+        </div>
       </div>
     </Wrapper>
   );
