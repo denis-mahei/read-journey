@@ -9,7 +9,7 @@ import LibraryBookItem from '@/app/components/library-book-item';
 interface MyLibraryBooksProps {
   books: IBook[];
   handleDelete: (id: string) => void;
-  onSelectBook: (book: BookItem) => void;
+  onSelectBook: (id: string) => void;
 }
 
 const MyLibraryBooks = ({
@@ -18,14 +18,14 @@ const MyLibraryBooks = ({
   onSelectBook,
 }: MyLibraryBooksProps) => {
   return (
-    <div className="flex flex-1 flex-col p-5 md:p-8 lg:p-5 bg-secondary-bg rounded-4xl">
+    <div className="flex flex-1 flex-col px-5 py-10 lg:p-5 bg-secondary-bg rounded-4xl">
       <div className="flex justify-between mb-3.5">
         <h3 className="font-bold text-[20px]">My library</h3>
         <StatusFilter />
       </div>
-      <div className="flex flex-1 w-full">
+      <div className="flex flex-1">
         {books.length > 0 ? (
-          <ul className="flex flex-wrap">
+          <ul className="flex flex-wrap gap-2">
             {books.length > 0 &&
               books.map((book) => (
                 <LibraryBookItem

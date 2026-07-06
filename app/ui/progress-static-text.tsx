@@ -9,7 +9,7 @@ const ProgressStaticText = () => {
         Here you will see when and how much you read. To record, click
         on the red button above.
       </p>
-      <div className="rounded-full bg-input-bg p-6 flex justify-center self-center items-center">
+      <div className="rounded-full bg-input-bg p-6 flex justify-center self-center items-center mb-5">
         <Image
           src="/images/star.png"
           alt="star"

@@ -88,4 +88,18 @@
         <path d="M5.83301 6.41663V9.91663" stroke="#E85050" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M8.16699 6.41663V9.91663" stroke="#E85050" stroke-linecap="round" stroke-linejoin="round" />
     </symbol>
+    <symbol id="date" width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect width="16" height="16" rx="4" fill="#F9F9F9" />
+        <rect x="4" y="4" width="8" height="8" rx="2" fill="#141414" />
+    </symbol>
+    <symbol id="diagram" width="44" height="18" viewBox="0 0 44 18" fill="none">
+        <path d="M43.5625 1L0.5625 6.96493V18H43.5625V1Z" fill="#30B94D" fill-opacity="0.2" />
+        <rect width="43.5143" height="2.17572" rx="1" transform="matrix(-0.987181 0.159606 0.159606 0.987181 42.8096 0)" fill="#30B94D" />
+    </symbol>
+    <symbol id='delete' width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1.75 3.5H2.91667H12.25" stroke="#686868" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M11.0834 3.49984V11.6665C11.0834 11.9759 10.9605 12.2727 10.7417 12.4915C10.5229 12.7103 10.2262 12.8332 9.91675 12.8332H4.08342C3.774 12.8332 3.47725 12.7103 3.25846 12.4915C3.03966 12.2727 2.91675 11.9759 2.91675 11.6665V3.49984M4.66675 3.49984V2.33317C4.66675 2.02375 4.78967 1.72701 5.00846 1.50821C5.22725 1.28942 5.524 1.1665 5.83342 1.1665H8.16675C8.47617 1.1665 8.77291 1.28942 8.99171 1.50821C9.2105 1.72701 9.33342 2.02375 9.33342 2.33317V3.49984" stroke="#686868" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M5.83325 6.4165V9.9165" stroke="#686868" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M8.16675 6.4165V9.9165" stroke="#686868" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
 </svg>

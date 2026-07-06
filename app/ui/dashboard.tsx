@@ -1,5 +1,4 @@
 import React from 'react';
-import MainWrapper from '@/app/ui/main-wrapper';
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -7,11 +6,9 @@ interface DashboardProps {
 
 const Dashboard = ({ children }: DashboardProps) => {
   return (
-    <MainWrapper>
-      <div className="flex flex-col md:flex-row md:gap-5 lg:flex-col">
-        {children}
-      </div>
-    </MainWrapper>
+    <div className="p-5 md:p-8 lg:p-5 bg-secondary-bg rounded-4xl flex flex-col md:flex-row md:gap-5 lg:flex-col">
+      {children}
+    </div>
   );
 };
 

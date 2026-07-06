@@ -16,10 +16,11 @@ const Diary = ({
   totalPages,
   progress,
 }: DiaryProps) => {
+  const newestFirst = progress.slice().reverse();
   return (
     <Wrapper>
-      <ul>
-        {progress.map((item) => (
+      <ul className="max-h-60 overflow-y-auto pr-2">
+        {newestFirst.map((item) => (
           <DiaryItem
             onDelete={onDelete}
             status={status}

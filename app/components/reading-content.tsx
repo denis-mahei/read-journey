@@ -20,6 +20,7 @@ import clsx from 'clsx';
 import { toast } from 'sonner';
 import IsReadModal from '@/app/ui/is-read-modal';
 import axios from 'axios';
+import MainWrapper from '@/app/ui/main-wrapper';
 
 interface ReadingContentProps {
   id: string;
@@ -76,7 +77,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
   return (
     <>
       <Dashboard>
-        <div className="flex flex-col gap-10 md:flex-row">
+        <div>
           <AddReading
             onStartReading={handleStartReading}
             onFinishReading={handleFinishReading}
@@ -90,7 +91,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
                     ? 'Statistics'
                     : 'Diary'}
                 </h3>
-                <div className="flex">
+                <div className="flex gap-2 items-center">
                   <button
                     onClick={() => setActiveView('diary')}
                     className={clsx(
@@ -145,24 +146,29 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
         </div>
       </Dashboard>
       {book && (
-        <>
-          <LibraryBookItem book={book} />
-          {!isReading ? (
-            <Icon
-              name="rec"
-              viewBox="0 0 50 50"
-              width={50}
-              height={50}
-            />
-          ) : (
-            <Icon
-              name="stop-rec"
-              viewBox="0 0 50 50"
-              width={50}
-              height={50}
-            />
-          )}
-        </>
+        <MainWrapper>
+          <h2 className="text-xl font-bold mb-10">My reading</h2>
+          <div className="flex flex-col items-center gap-5">
+            <LibraryBookItem book={book} />
+            {!isReading ? (
+              <Icon
+                name="rec"
+                viewBox="0 0 50 50"
+                width={50}
+                height={50}
+                className="size-7 md:size-12"
+              />
+            ) : (
+              <Icon
+                name="stop-rec"
+                viewBox="0 0 50 50"
+                width={50}
+                height={50}
+                className="size-7 md:size-12"
+              />
+            )}
+          </div>
+        </MainWrapper>
       )}
       {isRead && <IsReadModal onClose={() => setIsRead(false)} />}
     </>

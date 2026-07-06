@@ -45,7 +45,7 @@ const AddReading = ({
   };
 
   return (
-    <div>
+    <div className="mb-10">
       <h2 className="text-[10px] ml-3.5 mb-2">
         {isReading ? 'Stop page:' : 'Start page:'}
       </h2>

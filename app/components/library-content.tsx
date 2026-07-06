@@ -68,6 +68,13 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
     setIsSuccess(true);
   };
 
+  const handleSelectBook = (id: string) => {
+    const selected = books.find((book) => book._id === id);
+    if (selected) {
+      setSelectedBook(selected);
+    }
+  };
+
   return (
     <>
       <div>
@@ -87,7 +94,7 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
       <MyLibraryBooks
         books={books}
         handleDelete={handleDelete}
-        onSelectBook={setSelectedBook}
+        onSelectBook={handleSelectBook}
       />
       {selectedBook && (
         <BookModal

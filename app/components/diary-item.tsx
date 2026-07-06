@@ -33,18 +33,48 @@ const DiaryItem = ({
   };
 
   return (
-    <li>
-      <h4>{formatedDate}</h4>
-      <p className="text-gray-text">{during} minutes</p>
-      <p>{pagesRead}</p>
-      <p>{percentage}%</p>
+    <li className="flex gap-2 first:text-primary text-gray-text">
+      <div className="flex flex-col items-center">
+        <Icon
+          name="date"
+          width={16}
+          height={16}
+          viewBox={'0 0 16 16'}
+        />
+        <div className="w-0.5 bg-secondary-bg flex-1" />
+      </div>
+      <div className="w-full">
+        <div className="flex justify-between items-center gap-2 mb-4">
+          <h4 className="text-xs translate-y-px font-bold">
+            {formatedDate}
+          </h4>
+          <p className="text-xs text-gray-text">{pagesRead} pages</p>
+        </div>
+        <div className="flex justify-between items-center mb-1">
+          <p className="text-sm text-primary">{percentage}%</p>
+          <Icon
+            name="diagram"
+            width={44}
+            height={18}
+            viewBox={'0 0 44 18'}
+          />
+        </div>
+        <div className="flex justify-between">
+          <p className="text-gray-text text-[10px]">
+            {during} minutes
+          </p>
+          <p className="text-gray-text text-[10px] w-11 text-center mb-4">
+            {details.speed} pages per hour
+          </p>
+        </div>
+      </div>
       {status === 'in-progress' && (
         <button onClick={handleDelete}>
           <Icon
-            name="trash"
-            viewBox="0 0 24 24"
-            width={24}
-            height={24}
+            name="delete"
+            viewBox="0 0 14 14"
+            width={14}
+            height={14}
           />
         </button>
       )}
