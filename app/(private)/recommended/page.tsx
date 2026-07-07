@@ -4,10 +4,16 @@ import Dashboard from '@/app/ui/dashboard';
 import FilterForm from '@/app/components/filter-form';
 import TextContent from '@/app/ui/text-content';
 import BlockQuote from '@/app/ui/block-quote';
+import { Metadata } from 'next';
 
 interface RecommendedPageProps {
   searchParams: Promise<{ page?: string }>;
 }
+
+export const metadata: Metadata = {
+  title: 'Recommended Books',
+  description: 'Recommended Books from Read Journey',
+};
 
 const RecommendedPage = async ({
   searchParams,
