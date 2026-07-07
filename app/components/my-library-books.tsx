@@ -2,9 +2,10 @@
 
 import React from 'react';
 import StatusFilter from '@/app/components/status-filter';
-import { BookItem, IBook } from '@/types/definitions';
+import { IBook } from '@/types/definitions';
 import EmptyLib from '@/app/ui/empty-lib';
 import LibraryBookItem from '@/app/components/library-book-item';
+import MainWrapper from '@/app/ui/main-wrapper';
 
 interface MyLibraryBooksProps {
   books: IBook[];
@@ -18,12 +19,12 @@ const MyLibraryBooks = ({
   onSelectBook,
 }: MyLibraryBooksProps) => {
   return (
-    <div className="flex flex-1 flex-col px-5 py-10 lg:p-5 bg-secondary-bg rounded-4xl">
+    <MainWrapper className="lg:flex-1 flex flex-col relative">
       <div className="flex justify-between mb-3.5">
         <h3 className="font-bold text-[20px]">My library</h3>
         <StatusFilter />
       </div>
-      <div className="flex flex-1">
+      <div className="flex-1">
         {books.length > 0 ? (
           <ul className="flex flex-wrap gap-2">
             {books.length > 0 &&
@@ -37,12 +38,12 @@ const MyLibraryBooks = ({
               ))}
           </ul>
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
+          <div className="absolute inset-0 flex justify-center items-center">
             <EmptyLib />
           </div>
         )}
       </div>
-    </div>
+    </MainWrapper>
   );
 };
 

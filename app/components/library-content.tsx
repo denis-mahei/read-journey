@@ -77,20 +77,17 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
 
   return (
     <>
-      <div>
-        <Dashboard>
-          <AddBookForm
-            isSuccess={isSuccess}
-            onSuccess={setIsSuccess}
-            onAdd={handleAdd}
-          />
-          <Wrapper>
-            <p className="font-bold mb-3.5">Recommended books</p>
-            <RecommendedShortList />
-          </Wrapper>
-          <BlockQuote />
-        </Dashboard>
-      </div>
+      <Dashboard>
+        <AddBookForm
+          isSuccess={isSuccess}
+          onSuccess={setIsSuccess}
+          onAdd={handleAdd}
+        />
+        <Wrapper>
+          <p className="font-bold mb-3.5">Recommended books</p>
+          <RecommendedShortList />
+        </Wrapper>
+      </Dashboard>
       <MyLibraryBooks
         books={books}
         handleDelete={handleDelete}

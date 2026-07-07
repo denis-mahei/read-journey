@@ -149,7 +149,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
         <MainWrapper>
           <h2 className="text-xl font-bold mb-10">My reading</h2>
           <div className="flex flex-col items-center gap-5">
-            <LibraryBookItem book={book} />
+            <LibraryBookItem book={book} variant={'center'} />
             {!isReading ? (
               <Icon
                 name="rec"

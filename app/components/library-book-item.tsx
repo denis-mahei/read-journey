@@ -9,13 +9,21 @@ interface LibraryBookItemProps {
   book: BookItem;
   onDelete?: (id: string) => void;
   selectedBook?: (id: string) => void;
+  variant?: 'base' | 'center';
 }
+
+const text = {
+  base: 'text-left',
+  center: 'text-center',
+};
 
 const LibraryBookItem = ({
   book,
   onDelete,
   selectedBook,
+  variant = 'base',
 }: LibraryBookItemProps) => {
+  const textStyle = text[variant];
   return (
     <li className="flex flex-col w-34.25 h-full">
       <Image
@@ -42,12 +50,17 @@ const LibraryBookItem = ({
         className="hidden md:block rounded-lg mb-2 object-cover h-52"
         onClick={() => selectedBook?.(book._id)}
       />
-      <div className="flex items-center gap-3.5">
+      <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold line-clamp-1">
+          <h3
+            className={`text-sm font-bold line-clamp-1 ${textStyle}`}
+          >
+            {book.title}
             {book.title}
           </h3>
-          <p className="text-[10px] text-gray-text">{book.author}</p>
+          <p className={`text-[10px] text-gray-text ${textStyle}`}>
+            {book.author}
+          </p>
         </div>
         {onDelete && (
           <button

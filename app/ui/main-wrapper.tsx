@@ -1,12 +1,19 @@
 import React from 'react';
+import clsx from 'clsx';
 
 interface MainWrapperProps {
   children: React.ReactNode;
+  className?: string;
 }
 
-const MainWrapper = ({ children }: MainWrapperProps) => {
+const MainWrapper = ({ children, className }: MainWrapperProps) => {
   return (
-    <div className="px-5 py-10 md:p-8 lg:p-5 bg-secondary-bg rounded-4xl">
+    <div
+      className={clsx(
+        'px-5 py-10 md:px-10 bg-secondary-bg rounded-4xl min-h-117.5',
+        className,
+      )}
+    >
       {children}
     </div>
   );
