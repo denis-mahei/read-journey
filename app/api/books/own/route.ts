@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
   }
 
   const searchParams = req.nextUrl.searchParams;
-  if (!searchParams) return null;
 
   const status = searchParams.get('status');
 
