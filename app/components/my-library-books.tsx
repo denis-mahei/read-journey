@@ -40,7 +40,7 @@ const MyLibraryBooks = ({
               ))}
           </ul>
         ) : (
-          <div className="absolute inset-0 flex justify-center items-center">
+          <div className="absolute pointer-events-none inset-0 flex justify-center items-center">
             <EmptyLib />
           </div>
         )}
