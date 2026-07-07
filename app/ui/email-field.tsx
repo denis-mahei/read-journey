@@ -1,14 +1,13 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { SignInRequest } from '@/types/definitions';
 import Field from '@/app/ui/field';
 
-type EmailFieldProps = {
-  form: UseFormReturn<SignInRequest>;
+interface EmailFieldProps {
+  form: UseFormReturn<any>;
   label: string;
-};
+}
 
-const EmailField = ({ form }: EmailFieldProps) => {
+const EmailField = ({ form, label }: EmailFieldProps) => {
   const {
     register,
     formState: { errors },
@@ -16,11 +15,11 @@ const EmailField = ({ form }: EmailFieldProps) => {
   return (
     <Field
       htmlFor={'email'}
-      label={'Email'}
+      label={label}
       errors={
         errors.email && (
           <small className="px-3 text-xs text-red-600">
-            {errors.email.message}
+            {String(errors.email?.message)}
           </small>
         )
       }

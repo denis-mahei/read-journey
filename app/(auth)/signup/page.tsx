@@ -57,7 +57,7 @@ const SignUpPage = () => {
         className="flex flex-col gap-4"
       >
         <NameField form={form} />
-        <EmailField form={form} />
+        <EmailField form={form} label={'Email:'} />
         <PasswordField form={form} />
         <div className="flex items-center gap-x-3.5">
           <Button>Registration</Button>

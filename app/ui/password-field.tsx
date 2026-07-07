@@ -5,7 +5,7 @@ import Icon from '@/app/ui/icon';
 import clsx from 'clsx';
 
 interface PasswordFieldProps {
-  form: UseFormReturn<SignInRequest>;
+  form: UseFormReturn<any>;
 }
 
 const PasswordField = ({ form }: PasswordFieldProps) => {
@@ -100,12 +100,12 @@ const PasswordField = ({ form }: PasswordFieldProps) => {
       </div>
       {passwordErrorType === 'required' && (
         <small className="text-xs text-red-600 px-3">
-          {passwordErrorMessage}
+          {String(passwordErrorMessage)}
         </small>
       )}
       {passwordErrorType === 'minLength' && (
         <small className="text-xs text-red-500 px-3">
-          {passwordErrorMessage}
+          {String(passwordErrorMessage)}
         </small>
       )}
       {isPasswordValid && (

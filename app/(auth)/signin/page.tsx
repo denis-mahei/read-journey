@@ -55,7 +55,7 @@ const SignInPage = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 min-h-68"
       >
-        <EmailField form={form} />
+        <EmailField label={'Email:'} form={form} />
         <PasswordField form={form} />
         <div className="flex items-center gap-x-3.5 mt-auto">
           <Button>Login</Button>
