@@ -1,9 +1,5 @@
-import Header from '@/app/components/header';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <Header />
-    </div>
-  );
+export default function Page() {
+  return redirect('/signup');
 }
