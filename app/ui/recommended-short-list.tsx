@@ -24,10 +24,10 @@ const RecommendedShortList = () => {
     fetchBooks();
   }, []);
   return (
-    <div className="flex flex-col flex-nowrap">
+    <>
       <BookList recommend={books} variant="compact" />
       <LinkToHome label={'Home'} href={'/recommended'} />
-    </div>
+    </>
   );
 };
 

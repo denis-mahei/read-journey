@@ -18,6 +18,7 @@ import {
 import clsx from 'clsx';
 import BookModal from '@/app/components/book-modal';
 import { toast } from 'sonner';
+import axios from 'axios';
 
 interface RecommendedBooksProps {
   page: number;
@@ -49,8 +50,12 @@ const RecommendedBooks = ({ page }: RecommendedBooksProps) => {
         });
         setRecommend(data.results);
         setTotalPages(data.totalPages);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          toast.error(err?.response?.data.error);
+        } else {
+          toast.error('Something went wrong');
+        }
       }
     };
     fetchRecommendedBooks();
@@ -76,7 +81,7 @@ const RecommendedBooks = ({ page }: RecommendedBooksProps) => {
   };
 
   return (
-    <MainWrapper>
+    <MainWrapper className="flex-1">
       <div className="flex justify-between md:justify-end lg:justify-between mb-5.5 w-full">
         <h1 className="text-xl font-bold md:hidden lg:text-[28px] lg:block">
           Recommended

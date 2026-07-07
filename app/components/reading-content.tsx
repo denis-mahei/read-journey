@@ -73,6 +73,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
   const filteredProgress = book?.progress
     ? book.progress.filter((p) => p.status === 'inactive')
     : [];
+  const times = book !== null && book.timeLeftToRead;
 
   return (
     <>
@@ -155,9 +156,11 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
             <h2 className="text-xl font-bold md:text-[28px]">
               My reading
             </h2>
-            <p className="text-xs md:text-sm text-gray-text">
-              time tot left read
-            </p>
+            {times && (
+              <p className="text-xs md:text-sm text-gray-text">
+                {times.hours} hours and {times.minutes} minutes left
+              </p>
+            )}
           </div>
           <div className="flex flex-col items-center gap-5">
             <LibraryBookItem book={book} variant={'reading'} />

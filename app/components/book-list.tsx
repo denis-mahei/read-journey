@@ -8,13 +8,19 @@ interface BookListProps {
   variant?: 'default' | 'compact';
 }
 
+const size = {
+  compact: 'grid grid-cols-3 gap-5',
+  default:
+    'grid grid-cols-[repeat(auto-fill,minmax(137px,1fr))] gap-5 w-full',
+};
+
 const BookList = ({
   recommend,
   variant = 'default',
   onSelectBook,
 }: BookListProps) => {
   return (
-    <ul className="flex gap-5 md:flex-wrap">
+    <ul className={size[variant]}>
       {recommend.map((book) => (
         <Book
           key={book._id}

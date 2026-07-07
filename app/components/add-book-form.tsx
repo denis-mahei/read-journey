@@ -43,7 +43,7 @@ const AddBookForm = ({
   };
 
   return (
-    <div className="lg:mb-19.5">
+    <div className="md:w-1/2 lg:w-full lg:mb-19.5">
       <div className="mb-5 md:mb-0">
         <h4 className="text-[10px] capitalize ml-3.5 mb-2 md:text-sm">
           Create your library:

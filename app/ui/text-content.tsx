@@ -4,7 +4,7 @@ import Wrapper from '@/app/ui/wrapper';
 
 const TextContent = () => {
   return (
-    <Wrapper>
+    <Wrapper className="md:w-1/2">
       <h2 className="text-md font-bold mb-5">Start your workout</h2>
       <ul>
         <li className="flex gap-3 mb-5">

@@ -21,7 +21,9 @@ const MyLibraryBooks = ({
   return (
     <MainWrapper className="lg:flex-1 flex flex-col relative">
       <div className="flex justify-between mb-3.5">
-        <h3 className="font-bold text-[20px]">My library</h3>
+        <h3 className="font-bold text-[20px] md:text-[28px]">
+          My library
+        </h3>
         <StatusFilter />
       </div>
       <div className="flex-1">

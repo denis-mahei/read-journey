@@ -83,7 +83,7 @@ const LibraryContent = ({ status }: LibraryContentProps) => {
           onSuccess={setIsSuccess}
           onAdd={handleAdd}
         />
-        <Wrapper>
+        <Wrapper className="md:w-1/2 lg:w-full">
           <p className="font-bold mb-3.5">Recommended books</p>
           <RecommendedShortList />
         </Wrapper>

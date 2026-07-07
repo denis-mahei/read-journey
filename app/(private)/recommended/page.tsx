@@ -15,7 +15,7 @@ const RecommendedPage = async ({
   const { page = '1' } = await searchParams;
   return (
     <>
-      <Dashboard>
+      <Dashboard className="lg:w-100">
         <FilterForm />
         <TextContent />
         <BlockQuote />
