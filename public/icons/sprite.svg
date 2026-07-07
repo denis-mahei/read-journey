@@ -89,7 +89,7 @@
         <path d="M8.16699 6.41663V9.91663" stroke="#E85050" stroke-linecap="round" stroke-linejoin="round" />
     </symbol>
     <symbol id="date" width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <rect width="16" height="16" rx="4" fill="#F9F9F9" />
+        <rect width="16" height="16" rx="4" fill="currentColor" />
         <rect x="4" y="4" width="8" height="8" rx="2" fill="#141414" />
     </symbol>
     <symbol id="diagram" width="44" height="18" viewBox="0 0 44 18" fill="none">

@@ -9,23 +9,37 @@ interface LibraryBookItemProps {
   book: BookItem;
   onDelete?: (id: string) => void;
   selectedBook?: (id: string) => void;
-  variant?: 'base' | 'center';
+  variant?: 'library' | 'reading';
 }
 
-const text = {
-  base: 'text-left',
-  center: 'text-center',
+const styles = {
+  library: {
+    sizeWrapper: 'w-34.25',
+    imgWidth: 137,
+    imgHeight: 208,
+    img: 'h-52',
+    title: 'text-sm text-left line-clamp-1',
+    author: 'text-[10px] text-left',
+  },
+  reading: {
+    sizeWrapper: 'w-full items-center',
+    imgWidth: 224,
+    imgHeight: 340,
+    img: 'h-85 mb-6',
+    title: 'text-center text-[20px]',
+    author: 'text-center text-sm',
+  },
 };
 
 const LibraryBookItem = ({
   book,
   onDelete,
   selectedBook,
-  variant = 'base',
+  variant = 'library',
 }: LibraryBookItemProps) => {
-  const textStyle = text[variant];
+  const customStyle = styles[variant];
   return (
-    <li className="flex flex-col w-34.25 h-full">
+    <li className={`flex flex-col h-full ${customStyle.sizeWrapper}`}>
       <Image
         src={
           book.imageUrl
@@ -33,9 +47,9 @@ const LibraryBookItem = ({
             : '/images/placeholder-mobile.png'
         }
         alt={book.title}
-        width={137}
-        height={208}
-        className="md:hidden rounded-lg mb-2 object-cover h-52"
+        width={customStyle.imgWidth}
+        height={customStyle.imgHeight}
+        className={`md:hidden rounded-lg mb-2 object-cover ${customStyle.img}`}
         onClick={() => selectedBook?.(book._id)}
       />
       <Image
@@ -47,18 +61,15 @@ const LibraryBookItem = ({
         alt={book.title}
         width={224}
         height={340}
-        className="hidden md:block rounded-lg mb-2 object-cover h-52"
+        className={`hidden md:block rounded-lg mb-2 object-cover ${customStyle.img}`}
         onClick={() => selectedBook?.(book._id)}
       />
       <div className="flex items-center justify-between">
         <div>
-          <h3
-            className={`text-sm font-bold line-clamp-1 ${textStyle}`}
-          >
-            {book.title}
+          <h3 className={`font-bold ${customStyle.title}`}>
             {book.title}
           </h3>
-          <p className={`text-[10px] text-gray-text ${textStyle}`}>
+          <p className={`text-gray-text ${customStyle.author}`}>
             {book.author}
           </p>
         </div>

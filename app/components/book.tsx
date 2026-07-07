@@ -32,7 +32,7 @@ const Book = ({
   onSelectBook,
   variant = 'default',
 }: BookProps) => {
-  const { title, recommend, totalPages, author, imageUrl } = book;
+  const { title, author, imageUrl } = book;
   const styles = sizeStyles[variant];
   return (
     <li className={`flex flex-col shrink ${styles.wrapper}`}>

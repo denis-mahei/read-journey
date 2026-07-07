@@ -15,7 +15,12 @@ const Statistics = ({ totalPages, progress }: StatisticsProps) => {
   return (
     <Wrapper>
       <div className="flex gap-5 flex-col items-center justify-center">
-        <svg width="116" height="116" viewBox="0 0 116 116">
+        <svg
+          width="116"
+          height="116"
+          viewBox="0 0 116 116"
+          className="md:size-34.5 lg:size-42"
+        >
           <circle
             cx="58"
             cy="58"

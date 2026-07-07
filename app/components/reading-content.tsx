@@ -76,80 +76,91 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
 
   return (
     <>
-      <Dashboard>
-        <div>
-          <AddReading
-            onStartReading={handleStartReading}
-            onFinishReading={handleFinishReading}
-            isReading={isReading}
-          />
-          {book !== null && filteredProgress.length > 0 ? (
-            <div>
-              <div className="flex justify-between items-center mb-5">
-                <h3 className="font-bold text-md">
-                  {activeView === 'statistics'
-                    ? 'Statistics'
-                    : 'Diary'}
-                </h3>
-                <div className="flex gap-2 items-center">
-                  <button
-                    onClick={() => setActiveView('diary')}
-                    className={clsx(
-                      'text-gray-text',
-                      activeView === 'diary'
-                        ? 'text-primary'
-                        : 'text-gray-text',
-                    )}
-                  >
-                    <Icon
-                      name="sand-clock"
-                      width={20}
-                      height={20}
-                      viewBox={'0 0 20 20'}
-                    />
-                  </button>
-                  <button
-                    onClick={() => setActiveView('statistics')}
-                    className={clsx(
-                      'text-gray-text',
-                      activeView === 'statistics'
-                        ? 'text-primary'
-                        : 'text-gray-text',
-                    )}
-                  >
-                    <Icon
-                      name="chart"
-                      width={20}
-                      height={20}
-                      viewBox={'0 0 20 20'}
-                    />
-                  </button>
-                </div>
+      <Dashboard className="lg:w-88.25 lg:gap-10">
+        <AddReading
+          onStartReading={handleStartReading}
+          onFinishReading={handleFinishReading}
+          isReading={isReading}
+        />
+        {book !== null && filteredProgress.length > 0 ? (
+          <div className="md:w-1/2 lg:w-full">
+            <div className="flex justify-between items-center mb-5 md:mb-4">
+              <h3 className="font-bold text-md">
+                {activeView === 'statistics' ? 'Statistics' : 'Diary'}
+              </h3>
+
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={() => setActiveView('diary')}
+                  className={clsx(
+                    'text-gray-text',
+                    activeView === 'diary'
+                      ? 'text-primary'
+                      : 'text-gray-text',
+                  )}
+                >
+                  <Icon
+                    name="sand-clock"
+                    width={20}
+                    height={20}
+                    viewBox={'0 0 20 20'}
+                  />
+                </button>
+                <button
+                  onClick={() => setActiveView('statistics')}
+                  className={clsx(
+                    'text-gray-text',
+                    activeView === 'statistics'
+                      ? 'text-primary'
+                      : 'text-gray-text',
+                  )}
+                >
+                  <Icon
+                    name="chart"
+                    width={20}
+                    height={20}
+                    viewBox={'0 0 20 20'}
+                  />
+                </button>
               </div>
-              {activeView === 'statistics' ? (
-                <Statistics
-                  totalPages={book.totalPages}
-                  progress={filteredProgress}
-                />
-              ) : (
-                <Diary
-                  status={book.status}
-                  progress={filteredProgress as Progress[]}
-                  totalPages={book.totalPages}
-                  onDelete={handleDelete}
-                />
-              )}
             </div>
-          ) : (
-            <ProgressStaticText />
-          )}
-        </div>
+            {activeView === 'statistics' && (
+              <p className="hidden lg:inline-block lg:text-sm text-gray-text lg:mb-5">
+                Each page, each chapter is a new round of knowledge, a
+                new step towards understanding. By rewriting
+                statistics, we create our own reading history.
+              </p>
+            )}
+            {activeView === 'statistics' ? (
+              <Statistics
+                totalPages={book.totalPages}
+                progress={filteredProgress}
+              />
+            ) : (
+              <Diary
+                status={book.status}
+                progress={filteredProgress as Progress[]}
+                totalPages={book.totalPages}
+                onDelete={handleDelete}
+              />
+            )}
+          </div>
+        ) : (
+          <ProgressStaticText />
+        )}
       </Dashboard>
       {book && (
-        <MainWrapper>
-          <h2 className="text-xl font-bold mb-10">My reading</h2>
+        <MainWrapper className="flex-1">
+          <div className="flex justify-between items-center mb-10 md:mb-8 lg:mb-11">
+            <h2 className="text-xl font-bold md:text-[28px]">
+              My reading
+            </h2>
+            <p className="text-xs md:text-sm text-gray-text">
+              time tot left read
+            </p>
+          </div>
           <div className="flex flex-col items-center gap-5">
-            <LibraryBookItem book={book} variant={'center'} />
+            <LibraryBookItem book={book} variant={'reading'} />
             {!isReading ? (
               <Icon
                 name="rec"
