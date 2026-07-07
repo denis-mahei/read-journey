@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 
 interface ModalWrapperProps {
   onClose: () => void;
@@ -27,7 +27,7 @@ const ModalWrapper = ({ onClose, children }: ModalWrapperProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <button className="absolute top-5 right-5" onClick={onClose}>
-          <Icon
+          <SvgIcon
             name="close"
             width={22}
             height={22}

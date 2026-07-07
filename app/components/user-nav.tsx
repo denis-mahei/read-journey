@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import MobileMenu from '@/app/components/mobile-menu';
 import NavLink from '@/app/components/nav-link';
 import UserBar from '@/app/ui/user-bar';
@@ -20,7 +20,7 @@ const UserNav = ({}: UserNavProps) => {
           className="h-7"
           onClick={() => setIsMobileMenuOpen(true)}
         >
-          <Icon
+          <SvgIcon
             name="burger"
             width={28}
             height={28}

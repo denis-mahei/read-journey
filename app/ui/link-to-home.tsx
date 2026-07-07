@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import Link from 'next/link';
 
 interface LinkToHomeProps {
@@ -17,7 +17,7 @@ const LinkToHome = ({
       className="flex w-full justify-between items-center mt-2.5"
     >
       <p className="underline text-sm text-gray-text">{label}</p>
-      <Icon
+      <SvgIcon
         name="r-arrow"
         width={24}
         height={24}

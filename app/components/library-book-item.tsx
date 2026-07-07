@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { BookItem } from '@/types/definitions';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 
 interface LibraryBookItemProps {
   book: BookItem;
@@ -79,7 +79,7 @@ const LibraryBookItem = ({
             onClick={() => onDelete?.(book._id)}
             className="ring ring-[#e8505020] bg-[#e8505010] rounded-full p-2"
           >
-            <Icon
+            <SvgIcon
               name="trash"
               width={14}
               height={14}

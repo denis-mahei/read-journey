@@ -2,7 +2,7 @@
 
 import React from 'react';
 import NavLink from '@/app/components/nav-link';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import Logout from '@/app/(auth)/logout/logout';
 
 interface MobileMenuProps {
@@ -16,7 +16,7 @@ const MobileMenu = ({ onClose }: MobileMenuProps) => {
 
       <aside className="w-1/2 h-full bg-secondary-bg flex flex-col px-6 py-4">
         <button className="self-end mb-8" onClick={onClose}>
-          <Icon
+          <SvgIcon
             name="close"
             width={28}
             height={28}

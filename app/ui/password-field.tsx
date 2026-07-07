@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { SignInRequest } from '@/types/definitions';
 import { UseFormReturn } from 'react-hook-form';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import clsx from 'clsx';
 
 interface PasswordFieldProps {
@@ -61,7 +60,7 @@ const PasswordField = ({ form }: PasswordFieldProps) => {
           })}
         />
         {passwordError && (
-          <Icon
+          <SvgIcon
             name="warn"
             width={20}
             height={20}
@@ -71,7 +70,7 @@ const PasswordField = ({ form }: PasswordFieldProps) => {
         )}
 
         {!passwordError && isPasswordValid && (
-          <Icon
+          <SvgIcon
             name="success"
             width={20}
             height={20}
@@ -82,14 +81,14 @@ const PasswordField = ({ form }: PasswordFieldProps) => {
 
         <button onClick={() => setShowPass(!showPass)} type="button">
           {showPass ? (
-            <Icon
+            <SvgIcon
               name="eye-open"
               width={20}
               height={20}
               viewBox="0 0 20 20"
             />
           ) : (
-            <Icon
+            <SvgIcon
               name="eye-close"
               width={20}
               height={20}

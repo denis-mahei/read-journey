@@ -6,7 +6,7 @@ interface IconProps {
   viewBox?: string;
 }
 
-const Icon = ({
+const SvgIcon = ({
   name,
   width,
   height,
@@ -27,4 +27,4 @@ const Icon = ({
   );
 };
 
-export default Icon;
+export default SvgIcon;

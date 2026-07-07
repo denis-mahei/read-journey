@@ -2,7 +2,7 @@ import React from 'react';
 import PrivateRouteGuard from '@/app/components/private-route-guard';
 import Header from '@/app/components/header';
 import { Toaster } from 'sonner';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 
 interface PrivateLayoutProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
         }}
         icons={{
           success: (
-            <Icon
+            <SvgIcon
               name="success"
               width={18}
               height={18}
@@ -32,7 +32,7 @@ const PrivateLayout = ({ children }: PrivateLayoutProps) => {
             />
           ),
           error: (
-            <Icon
+            <SvgIcon
               name="warn"
               width={18}
               height={18}

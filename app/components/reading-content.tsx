@@ -12,7 +12,7 @@ import AddReading, {
   AddReadingInput,
 } from '@/app/components/add-reading';
 import { BookDetails, Progress } from '@/types/definitions';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import ProgressStaticText from '@/app/ui/progress-static-text';
 import Diary from '@/app/components/diary';
 import Statistics from '@/app/components/statistics';
@@ -100,7 +100,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
                       : 'text-gray-text',
                   )}
                 >
-                  <Icon
+                  <SvgIcon
                     name="sand-clock"
                     width={20}
                     height={20}
@@ -116,7 +116,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
                       : 'text-gray-text',
                   )}
                 >
-                  <Icon
+                  <SvgIcon
                     name="chart"
                     width={20}
                     height={20}
@@ -165,7 +165,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
           <div className="flex flex-col items-center gap-5">
             <LibraryBookItem book={book} variant={'reading'} />
             {!isReading ? (
-              <Icon
+              <SvgIcon
                 name="rec"
                 viewBox="0 0 50 50"
                 width={50}
@@ -173,7 +173,7 @@ const ReadingContent = ({ id }: ReadingContentProps) => {
                 className="size-7 md:size-12"
               />
             ) : (
-              <Icon
+              <SvgIcon
                 name="stop-rec"
                 viewBox="0 0 50 50"
                 width={50}

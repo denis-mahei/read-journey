@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 import clsx from 'clsx';
 
 const STATUS_OPTIONS = [
@@ -60,7 +60,7 @@ const StatusFilter = () => {
       >
         {selected?.label ?? 'Filter by status'}
         {isOpen ? (
-          <Icon
+          <SvgIcon
             name="chevron-up"
             width={16}
             height={16}
@@ -68,7 +68,7 @@ const StatusFilter = () => {
             className="text-primary size-4"
           />
         ) : (
-          <Icon
+          <SvgIcon
             name="chevron-down"
             width={16}
             height={16}

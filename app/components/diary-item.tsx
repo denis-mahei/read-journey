@@ -3,7 +3,7 @@
 import React from 'react';
 import { Progress } from '@/types/definitions';
 import { format } from 'date-fns';
-import Icon from '@/app/ui/icon';
+import SvgIcon from '@/app/ui/svg-icon';
 
 interface DiaryItemProps {
   details: Progress;
@@ -35,7 +35,7 @@ const DiaryItem = ({
   return (
     <li className="flex gap-2 first:text-primary text-gray-text">
       <div className="flex flex-col items-center">
-        <Icon
+        <SvgIcon
           name="date"
           width={16}
           height={16}
@@ -52,7 +52,7 @@ const DiaryItem = ({
         </div>
         <div className="flex justify-between items-center mb-1">
           <p className="text-sm text-primary">{percentage}%</p>
-          <Icon
+          <SvgIcon
             name="diagram"
             width={44}
             height={18}
@@ -70,7 +70,7 @@ const DiaryItem = ({
       </div>
       {status === 'in-progress' && (
         <button onClick={handleDelete}>
-          <Icon
+          <SvgIcon
             name="delete"
             viewBox="0 0 14 14"
             width={14}
